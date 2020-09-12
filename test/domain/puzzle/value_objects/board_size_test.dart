@@ -22,5 +22,10 @@ void main() {
       final sameSize = BoardSize(6);
       expect(size, equals(sameSize));
     });
+    test("should give assertion error", () {
+      expect(() => BoardSize(2), throwsA(isA<AssertionError>()));
+      expect(() => BoardSize(1), throwsA(isA<AssertionError>()));
+      expect(() => BoardSize(0), throwsA(isA<AssertionError>()));
+    });
   });
 }
