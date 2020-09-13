@@ -9,4 +9,8 @@ class BlockActionRunner {
   List<Block> run() {
     return actor.act();
   }
+
+  BlockActionRunner chain(BlockActor Function(List<Block> blocks) actor) {
+    return BlockActionRunner(actor(run()));
+  }
 }
