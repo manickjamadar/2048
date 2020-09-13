@@ -31,4 +31,40 @@ void main() {
     verify(actor.act());
     verifyNoMoreInteractions(actor);
   });
+
+  test("should work chaining on actors correctly", () {
+    final modifiedBlocks1 = [
+      Block.random(index: 3, boardSize: 4),
+      Block.random(index: 5, boardSize: 4),
+      Block.random(index: 6, boardSize: 4),
+    ];
+    final modifiedBlocks2 = [
+      Block.random(index: 3, boardSize: 4),
+      Block.random(index: 5, boardSize: 4).toMerged(),
+      Block.random(index: 6, boardSize: 4),
+    ];
+    final modifiedBlocks3 = [
+      Block.random(index: 3, boardSize: 4).toMerged(),
+      Block.random(index: 5, boardSize: 4).toMerged().toMerged(),
+      Block.random(index: 6, boardSize: 4),
+    ];
+    final actor2 = MockBlockActor();
+    final actor3 = MockBlockActor();
+
+    when(actor.act()).thenReturn(modifiedBlocks1);
+    when(actor2.act()).thenReturn(modifiedBlocks2);
+    when(actor3.act()).thenReturn(modifiedBlocks3);
+
+    final lastModifiedBlocks = BlockActionRunner(actor).chain((blocks) {
+      expect(blocks, equals(modifiedBlocks1));
+      return actor2;
+    }).chain((blocks) {
+      expect(blocks, equals(modifiedBlocks2));
+      return actor3;
+    }).run();
+    expect(lastModifiedBlocks, equals(modifiedBlocks3));
+    verify(actor.act()).called(1);
+    verify(actor2.act()).called(1);
+    verify(actor3.act()).called(1);
+  });
 }
