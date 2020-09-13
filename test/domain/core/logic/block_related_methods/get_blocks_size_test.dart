@@ -5,7 +5,7 @@ import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 
 void main() {
-  group("Get empty blocks method test => ", () {
+  group("Get blocks size method test => ", () {
     test("should return none if list length is not right", () {
       final blocks = [
         Block.random(index: 3, boardSize: 4),
