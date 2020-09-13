@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:twozerofoureight/domain/core/logic/action_runner/block_action_runner.dart';
+import 'package:twozerofoureight/domain/core/logic/action_runner/action_runner.dart';
 import 'package:twozerofoureight/domain/core/logic/block_actors/generate_random_block_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/get_empty_blocks.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
@@ -21,9 +21,7 @@ void main() {
       ];
     });
     test("should return same block if count is 0", () {
-      expect(
-          BlockActionRunner(GenerateRandomBlockActor(testBlocks, count: 0))
-              .run(),
+      expect(ActionRunner(GenerateRandomBlockActor(testBlocks, count: 0)).run(),
           equals(testBlocks));
     });
     test("should return same block if there is no empty blocks", () {
@@ -33,14 +31,14 @@ void main() {
         Block.random(index: 5, boardSize: 4),
         Block.random(index: 8, boardSize: 4),
       ];
-      expect(BlockActionRunner(GenerateRandomBlockActor(filledBlocks)).run(),
+      expect(ActionRunner(GenerateRandomBlockActor(filledBlocks)).run(),
           equals(filledBlocks));
     });
 
     test("should generate one random block correctly", () {
       final emptyBlocks = getEmptyBlocks(testBlocks);
       final modifiedBlocks =
-          BlockActionRunner(GenerateRandomBlockActor(testBlocks)).run();
+          ActionRunner(GenerateRandomBlockActor(testBlocks)).run();
       final modifiedEmptyBlocks = getEmptyBlocks(modifiedBlocks);
 
       expect(emptyBlocks.length - 1, equals(modifiedEmptyBlocks.length));
@@ -55,7 +53,7 @@ void main() {
       ];
 
       final modifiedBlocks =
-          BlockActionRunner(GenerateRandomBlockActor(blocks)).run();
+          ActionRunner(GenerateRandomBlockActor(blocks)).run();
 
       expect(modifiedBlocks[1].isEmpty, isFalse);
       expect(modifiedBlocks[1].index, equals(blocks[1].index));
@@ -64,7 +62,7 @@ void main() {
 
     test("should filled all empty blocks with random blocks", () {
       final int emptyBlocksSize = getEmptyBlocks(testBlocks).length;
-      final modifiedBlocks = BlockActionRunner(
+      final modifiedBlocks = ActionRunner(
               GenerateRandomBlockActor(testBlocks, count: emptyBlocksSize))
           .run();
 
@@ -80,7 +78,7 @@ void main() {
       ];
       final count = 4;
       final modifiedBlocks =
-          BlockActionRunner(GenerateRandomBlockActor(emptyBlocks, count: count))
+          ActionRunner(GenerateRandomBlockActor(emptyBlocks, count: count))
               .run();
       expect(getEmptyBlocks(modifiedBlocks).length, equals(1));
     });
@@ -94,9 +92,9 @@ void main() {
       ];
       while (true) {
         final modifiedBlocks1 =
-            BlockActionRunner(GenerateRandomBlockActor(emptyBlocks)).run();
+            ActionRunner(GenerateRandomBlockActor(emptyBlocks)).run();
         final modifiedBlocks2 =
-            BlockActionRunner(GenerateRandomBlockActor(emptyBlocks)).run();
+            ActionRunner(GenerateRandomBlockActor(emptyBlocks)).run();
         final randomBlockIndex1 =
             modifiedBlocks1.indexWhere((block) => block.isEmpty);
         final randomBlockIndex2 =

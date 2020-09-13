@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:twozerofoureight/domain/core/logic/action_runner/block_action_runner.dart';
+import 'package:twozerofoureight/domain/core/logic/action_runner/action_runner.dart';
 import 'package:twozerofoureight/domain/core/logic/actor/block_actor.dart';
+
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 
 // Mock block actor class
@@ -14,7 +15,7 @@ void main() {
   });
 
   test("should run actor act method", () {
-    BlockActionRunner(actor).run();
+    ActionRunner(actor).run();
     verify(actor.act()).called(1);
   });
 
@@ -27,7 +28,7 @@ void main() {
     ];
     when(actor.act()).thenReturn(modifiedBlocks);
 
-    expect(BlockActionRunner(actor).run(), modifiedBlocks);
+    expect(ActionRunner(actor).run(), modifiedBlocks);
     verify(actor.act());
     verifyNoMoreInteractions(actor);
   });
@@ -55,7 +56,7 @@ void main() {
     when(actor2.act()).thenReturn(modifiedBlocks2);
     when(actor3.act()).thenReturn(modifiedBlocks3);
 
-    final lastModifiedBlocks = BlockActionRunner(actor).chain((blocks) {
+    final lastModifiedBlocks = ActionRunner(actor).chain((blocks) {
       expect(blocks, equals(modifiedBlocks1));
       return actor2;
     }).chain((blocks) {
