@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:twozerofoureight/domain/core/logic/block_action_runner.dart';
+import 'package:twozerofoureight/domain/core/logic/action_runner.dart/block_action_runner.dart';
 import 'package:twozerofoureight/domain/core/logic/block_actors/extended_actors/make_old_actor.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 

@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:twozerofoureight/domain/core/logic/block_action_runner.dart';
-import 'package:twozerofoureight/domain/core/logic/block_actors/block_actor.dart';
+import 'package:twozerofoureight/domain/core/logic/action_runner.dart/block_action_runner.dart';
+import 'package:twozerofoureight/domain/core/logic/actor/block_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/block_actors/extended_actors/make_old_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/has_any_empty_blocks.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
