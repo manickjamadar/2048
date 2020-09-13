@@ -6,6 +6,9 @@ import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 
 void main() {
   group("Get blocks size method test => ", () {
+    test("should return none for empty list of blocks", () {
+      expect(getBlocksSize([]), equals(None()));
+    });
     test("should return none if list length is not right", () {
       final blocks = [
         Block.random(index: 3, boardSize: 4),
