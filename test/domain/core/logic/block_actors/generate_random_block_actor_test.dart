@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:twozerofoureight/domain/core/logic/action_runner.dart/block_action_runner.dart';
-import 'package:twozerofoureight/domain/core/logic/block_actors/extended_actors/generate_random_block_actor.dart';
+import 'package:twozerofoureight/domain/core/logic/action_runner/block_action_runner.dart';
+import 'package:twozerofoureight/domain/core/logic/block_actors/generate_random_block_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/get_empty_blocks.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 

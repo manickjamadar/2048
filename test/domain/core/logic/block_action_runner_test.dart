@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:twozerofoureight/domain/core/logic/action_runner.dart/block_action_runner.dart';
+import 'package:twozerofoureight/domain/core/logic/action_runner/block_action_runner.dart';
 import 'package:twozerofoureight/domain/core/logic/actor/block_actor.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 
