@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:twozerofoureight/shared/helpers/board_direction.dart';
+import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 
 void main() {
   group("Board Direction test => ", () {

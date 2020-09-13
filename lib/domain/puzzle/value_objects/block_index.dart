@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
-import 'package:twozerofoureight/shared/helpers/board_direction.dart';
 
 class BlockIndex extends Equatable {
   final int value;
