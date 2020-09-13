@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import "package:twozerofoureight/shared/helpers/list_extensions.dart";
+import "package:twozerofoureight/helpers/list_extensions.dart";
 
 void main() {
   group("List Extensions test => ", () {

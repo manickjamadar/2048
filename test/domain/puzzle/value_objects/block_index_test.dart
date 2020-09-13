@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/block_index.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
-import "package:twozerofoureight/shared/helpers/list_extensions.dart";
+import 'package:twozerofoureight/helpers/list_extensions.dart';
 
 void main() {
   group("Block Index test => ", () {
