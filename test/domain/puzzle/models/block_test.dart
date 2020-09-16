@@ -142,5 +142,17 @@ void main() {
       expect(emptyBlock.point, isNot(equals(randomBlock.point)));
       expect(randomBlock.isNew, isTrue);
     });
+
+    test("should throw assertion error when detaching with wrong index", () {
+      final block = Block.random(index: 3, boardSize: 3);
+      expect(() => block.detach(14), throwsA(isA<AssertionError>()));
+    });
+    test("should deatch to 1 from 4 position successfully", () {
+      final block = Block.random(index: 4, boardSize: 3);
+      final deatchedBlock =
+          block.copyWith(index: BlockIndex(size: BoardSize(3), value: 1));
+      final expectedBlock = block.detach(1);
+      expect(expectedBlock, equals(deatchedBlock));
+    });
   });
 }

@@ -36,6 +36,11 @@ abstract class Block implements _$Block {
 
   bool isDetached(int positionIndex) => this.index.value != positionIndex;
 
+  Block detach(int index) {
+    return this
+        .copyWith(index: BlockIndex(size: this.index.size, value: index));
+  }
+
   Block toMerged() {
     return Block(
         id: UniqueId(), index: this.index, point: this.point.mergedPoint());
