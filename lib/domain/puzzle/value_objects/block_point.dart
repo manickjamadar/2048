@@ -18,4 +18,9 @@ class BlockPoint extends Equatable {
 
   @override
   List<Object> get props => [value];
+
+  @override
+  String toString() {
+    return 'BlockPoint($value)';
+  }
 }

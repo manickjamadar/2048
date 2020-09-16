@@ -8,4 +8,9 @@ class BoardSize extends Equatable {
 
   @override
   List<Object> get props => [value];
+
+  @override
+  String toString() {
+    return 'BoardSize($value)';
+  }
 }

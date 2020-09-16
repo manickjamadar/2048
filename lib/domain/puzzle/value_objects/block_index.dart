@@ -40,4 +40,9 @@ class BlockIndex extends Equatable {
   BlockIndex copy() {
     return BlockIndex(size: BoardSize(this.size.value), value: this.value);
   }
+
+  @override
+  String toString() {
+    return "BlockIndex(value: $value, size: $size)";
+  }
 }
