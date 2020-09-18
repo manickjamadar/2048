@@ -7,6 +7,15 @@ import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 void main() {
   group("Board test => ", () {
     group("Board empty test => ", () {
+      test("should return true if board is empty", () {
+        final board = Board.empty(BoardSize(3));
+        expect(board.isEmpty, isTrue);
+      });
+      test("should return false if board is empty", () {
+        final board = Board.empty(BoardSize(3));
+        board.blocks[3] = Block.random(index: 3, boardSize: 3);
+        expect(board.isEmpty, isFalse);
+      });
       test("should generate 9 empty blocks for board size 3", () {
         final emptyBoard = Board.empty(BoardSize(3));
 

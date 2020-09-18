@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:twozerofoureight/domain/core/logic/action_runner/action_runner.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/generate_empty_blocks.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/get_blocks_size.dart';
+import 'package:twozerofoureight/domain/core/logic/block_related_methods/get_empty_blocks.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/is_board_form.dart';
 import 'package:twozerofoureight/domain/core/logic/board_actors/slide_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
@@ -22,6 +23,8 @@ abstract class Board implements _$Board {
   bool get isValid => isBoardForm(blocks);
 
   BoardSize get size => getBlocksSize(blocks).fold(() => null, id);
+
+  bool get isEmpty => getEmptyBlocks(blocks).length == size.totalSize;
 
   bool get slidable {
     if (!isValid) {
