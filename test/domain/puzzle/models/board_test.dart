@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
+import 'package:twozerofoureight/domain/puzzle/value_objects/block_point.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 
 void main() {
@@ -175,6 +176,59 @@ void main() {
         final expectedBoardSize = BoardSize(3);
 
         expect(Board(blocks: blocks).size, equals(expectedBoardSize));
+      });
+    });
+    group("slidable test => ", () {
+      test("should return false if board is invalid", () {
+        final board = Board(blocks: [
+          Block.random(index: 3, boardSize: 3),
+          Block.random(index: 4, boardSize: 3),
+          Block.random(index: 5, boardSize: 3),
+          Block.random(index: 6, boardSize: 3),
+        ]);
+        expect(board.slidable, isFalse);
+      });
+      test('should return true for slidable in any direction', () {
+        final points = [
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.two,
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.empty,
+        ];
+        final boardSize = BoardSize(3);
+        final board = Board(
+            blocks: List.generate(boardSize.totalSize, (index) {
+          final point = points[index];
+          return Block.empty(index: index, boardSize: boardSize.value)
+              .copyWith(point: point);
+        }));
+        expect(board.slidable, isTrue);
+      });
+      test("should return false when there is no way to slide", () {
+        final points = [
+          BlockPoint.two,
+          BlockPoint.four,
+          BlockPoint.two,
+          BlockPoint.four,
+          BlockPoint.two,
+          BlockPoint.four,
+          BlockPoint.two,
+          BlockPoint.four,
+          BlockPoint.two
+        ];
+        final boardSize = BoardSize(3);
+        final board = Board(
+            blocks: List.generate(boardSize.totalSize, (index) {
+          final point = points[index];
+          return Block.empty(index: index, boardSize: boardSize.value)
+              .copyWith(point: point);
+        }));
+        expect(board.slidable, isFalse);
       });
     });
   });
