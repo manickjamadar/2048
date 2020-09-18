@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.3"
+  bloc_test:
+    dependency: "direct dev"
+    description:
+      name: bloc_test
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.0.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -346,7 +353,7 @@ packages:
       name: mockito
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "4.1.1"
   nested:
     dependency: transitive
     description:
