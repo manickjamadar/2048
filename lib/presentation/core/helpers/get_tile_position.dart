@@ -1,13 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
+import 'package:twozerofoureight/domain/puzzle/value_objects/block_index.dart';
 
 Offset getTilePosition({
-  @required int index,
+  @required BlockIndex index,
   @required double tileSize,
-  @required BoardSize boardSize,
 }) {
-  final x = tileSize * (index % boardSize.value);
-  final y = tileSize * (index / boardSize.value).floor();
+  if (tileSize < 1) {
+    return Offset(0, 0);
+  }
+  final x = tileSize * (index.value % index.size.value);
+  final y = tileSize * (index.value / index.size.value).floor();
   return Offset(x, y);
 }

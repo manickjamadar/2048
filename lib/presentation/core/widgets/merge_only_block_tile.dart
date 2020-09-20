@@ -21,9 +21,8 @@ class MergeOnlyBlockTile extends StatelessWidget {
       opacity: block.isEmpty ? 0 : 1,
       child: Transform.translate(
         offset: getTilePosition(
-          index: block.index.value,
+          index: block.index,
           tileSize: tile.size,
-          boardSize: block.index.size,
         ),
         child: PulseTransition(
           child: tile,

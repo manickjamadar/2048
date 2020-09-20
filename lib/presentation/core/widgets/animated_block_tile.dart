@@ -22,9 +22,9 @@ class AnimatedBlockTile extends StatelessWidget {
       id: block.id.value,
       duration: duration,
       position: getTilePosition(
-          index: block.index.value,
-          tileSize: tile.size,
-          boardSize: block.index.size),
+        index: block.index,
+        tileSize: tile.size,
+      ),
       curve: curve,
       child: AnimatedNewBlock(
         block: block,
