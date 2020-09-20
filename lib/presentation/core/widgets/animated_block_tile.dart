@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
+import 'package:twozerofoureight/presentation/core/helpers/get_tile_position.dart';
 import 'package:twozerofoureight/presentation/core/widgets/animated_new_block.dart';
 import 'package:twozerofoureight/presentation/core/widgets/animated_slide.dart';
 import 'package:twozerofoureight/presentation/core/widgets/tile.dart';
 
-class BlockTile extends StatelessWidget {
+class AnimatedBlockTile extends StatelessWidget {
   final Block block;
   final Tile tile;
-  final Offset position;
   final Duration duration;
-  const BlockTile({
+  const AnimatedBlockTile({
     Key key,
     @required this.block,
     @required this.tile,
-    @required this.position,
     @required this.duration,
   }) : super(key: key);
   @override
@@ -22,7 +21,10 @@ class BlockTile extends StatelessWidget {
     return AnimatedSlide(
       id: block.id.value,
       duration: duration,
-      position: position,
+      position: getTilePosition(
+          index: block.index.value,
+          tileSize: tile.size,
+          boardSize: block.index.size),
       curve: curve,
       child: AnimatedNewBlock(
         block: block,
