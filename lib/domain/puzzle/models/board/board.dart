@@ -8,6 +8,7 @@ import 'package:twozerofoureight/domain/core/logic/block_related_methods/is_boar
 import 'package:twozerofoureight/domain/core/logic/board_actors/slide_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
+import 'package:twozerofoureight/domain/puzzle/value_objects/block_point.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 part 'board.freezed.dart';
 
@@ -18,6 +19,17 @@ abstract class Board implements _$Board {
 
   factory Board.empty(BoardSize size) {
     return Board(blocks: generateEmptyBlocks(size));
+  }
+  factory Board.fromPoints(
+      {@required List<BlockPoint> points, @required BoardSize size}) {
+    if (points.length != size.totalSize) {
+      throw UnsupportedError("Points and size are not compatible");
+    }
+    return Board(
+        blocks: List.generate(
+            size.totalSize,
+            (index) => Block.empty(index: index, boardSize: size.value)
+                .copyWith(point: points[index])));
   }
 
   bool get isValid => isBoardForm(blocks);

@@ -3,6 +3,7 @@ import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/block_point.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
+import 'package:twozerofoureight/helpers/list_extensions.dart';
 
 void main() {
   group("Board test => ", () {
@@ -238,6 +239,38 @@ void main() {
               .copyWith(point: point);
         }));
         expect(board.slidable, isFalse);
+      });
+    });
+    group("from points test => ", () {
+      test("should throw error if points and size is not compatible", () {
+        final points = [
+          BlockPoint.random(),
+          BlockPoint.random(),
+          BlockPoint.random()
+        ];
+        expect(() => Board.fromPoints(points: points, size: BoardSize(3)),
+            throwsA(isA<UnsupportedError>()));
+      });
+      test("should return proper board if proper points and size passed", () {
+        final points = [
+          BlockPoint.two,
+          BlockPoint.four,
+          BlockPoint.empty,
+          BlockPoint.two,
+          BlockPoint.two,
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.four,
+          BlockPoint.two,
+        ];
+        final size = BoardSize(3);
+        final board = Board.fromPoints(points: points, size: size);
+        expect(board.isValid, isTrue);
+        expect(board.size, equals(size));
+        board.blocks.indexedMap((index, block) {
+          expect(block.point, equals(points[index]));
+          return block;
+        });
       });
     });
   });

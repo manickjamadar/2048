@@ -6,6 +6,7 @@ import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/models/block/block.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/block_point.dart';
+import 'package:twozerofoureight/domain/puzzle/value_objects/board_score.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 import 'package:twozerofoureight/helpers/list_extensions.dart';
 
@@ -23,6 +24,7 @@ void main() {
               isGameOver: false,
               slidable: true,
               previousBoard: None(),
+              score: BoardScore(0),
               mainBoard: cubit.state.mainBoard,
               mergeOnlyBoard: cubit.state.mergeOnlyBoard)));
       expect(getEmptyBlocks(cubit.state.mergeOnlyBoard.blocks).length,
@@ -38,13 +40,13 @@ void main() {
           Block.random(index: 3, boardSize: 3),
           Block.random(index: 3, boardSize: 3),
         ]);
-        expect(() => PuzzleCubit().initWithBoard(board),
+        expect(() => PuzzleCubit().initWithBoard(board, BoardScore(34)),
             throwsA(isA<UnsupportedError>()));
       });
       test("should return correct state with init with board with size 3", () {
         final board = Board.empty(BoardSize(3));
         board.blocks[0] = Block.random(index: 3, boardSize: 3);
-        final cubit = PuzzleCubit()..initWithBoard(board);
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(23));
 
         expect(
             cubit.state,
@@ -53,6 +55,7 @@ void main() {
                 slidable: true,
                 boardSize: BoardSize(3),
                 mainBoard: board,
+                score: BoardScore(23),
                 mergeOnlyBoard: cubit.state.mergeOnlyBoard,
                 previousBoard: None())));
         expect(getEmptyBlocks(cubit.state.mergeOnlyBoard.blocks).length, 9);
@@ -70,12 +73,8 @@ void main() {
           BlockPoint.four,
           BlockPoint.two,
         ];
-        final board = Board(
-            blocks: List.generate(
-                9,
-                (index) => Block.empty(index: index, boardSize: 3)
-                    .copyWith(point: points[index])));
-        final cubit = PuzzleCubit()..initWithBoard(board);
+        final board = Board.fromPoints(points: points, size: BoardSize(3));
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(34));
         expect(
             cubit.state,
             equals(PuzzleState(
@@ -83,19 +82,21 @@ void main() {
                 slidable: true,
                 boardSize: BoardSize(3),
                 mainBoard: board,
+                score: BoardScore(34),
                 mergeOnlyBoard: cubit.state.mergeOnlyBoard,
                 previousBoard: None())));
       });
       test('should generate two random block if board is empty', () {
         final cubit = PuzzleCubit();
         final boardSize = BoardSize(3);
-        cubit.initWithBoard(Board.empty(boardSize));
+        cubit.initWithBoard(Board.empty(boardSize), BoardScore(0));
         expect(
             cubit.state,
             equals(PuzzleState(
                 boardSize: boardSize,
                 isGameOver: false,
                 slidable: true,
+                score: BoardScore(0),
                 previousBoard: None(),
                 mainBoard: cubit.state.mainBoard,
                 mergeOnlyBoard: cubit.state.mergeOnlyBoard)));
@@ -120,12 +121,8 @@ void main() {
           BlockPoint.four.mergedPoint(),
         ];
         final boardSize = BoardSize(3);
-        final board = Board(
-            blocks: List.generate(
-                boardSize.totalSize,
-                (index) => Block.empty(index: index, boardSize: boardSize.value)
-                    .copyWith(point: points[index])));
-        final cubit = PuzzleCubit()..initWithBoard(board);
+        final board = Board.fromPoints(points: points, size: boardSize);
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(45));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -142,6 +139,7 @@ void main() {
                 isGameOver: false,
                 slidable: true,
                 previousBoard: None(),
+                score: BoardScore(0),
                 mainBoard: cubit.state.mainBoard,
                 mergeOnlyBoard: cubit.state.mergeOnlyBoard)));
         expect(getEmptyBlocks(cubit.state.mergeOnlyBoard.blocks).length,
@@ -167,13 +165,8 @@ void main() {
             BlockPoint.four.mergedPoint(),
           ];
           final boardSize = BoardSize(3);
-          final board = Board(
-              blocks: List.generate(
-                  boardSize.totalSize,
-                  (index) =>
-                      Block.empty(index: index, boardSize: boardSize.value)
-                          .copyWith(point: points[index])));
-          final cubit = PuzzleCubit()..initWithBoard(board);
+          final board = Board.fromPoints(points: points, size: boardSize);
+          final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(56));
           cubit.undo();
           expect(cubit.state.mainBoard, equals(board));
         },
@@ -192,12 +185,8 @@ void main() {
           BlockPoint.four.mergedPoint(),
         ];
         final boardSize = BoardSize(3);
-        final board = Board(
-            blocks: List.generate(
-                boardSize.totalSize,
-                (index) => Block.empty(index: index, boardSize: boardSize.value)
-                    .copyWith(point: points[index])));
-        final cubit = PuzzleCubit()..initWithBoard(board);
+        final board = Board.fromPoints(points: points, size: boardSize);
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(47));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -211,6 +200,7 @@ void main() {
         expect(cubit.state.previousBoard, equals(None()));
         expect(cubit.state.isGameOver, isFalse);
         expect(cubit.state.mainBoard, equals(board));
+        expect(cubit.state.score, BoardScore(47));
         cubit.undo();
         expect(cubit.state.previousBoard, equals(None()));
         expect(cubit.state.isGameOver, isFalse);
@@ -218,10 +208,6 @@ void main() {
       });
     });
     group("slide event => ", () {
-      //slide properly with correct slide, merge and mergeonly board
-      //return isgame over true check
-      //should not execute slide two times together
-      //should return correct previous board
       test("should return slided , merge and merge only board properly",
           () async {
         final boardSize = BoardSize(3);
@@ -236,11 +222,7 @@ void main() {
           BlockPoint.empty,
           BlockPoint.two,
         ];
-        final normalBoard = Board(
-            blocks: List.generate(boardSize.totalSize, (index) {
-          return Block.empty(index: index, boardSize: boardSize.value)
-              .copyWith(point: points[index]);
-        }));
+        final normalBoard = Board.fromPoints(points: points, size: boardSize);
         final detachedIndexes = [0, 1, 2, 0, 1, 2, 3, 7, 2];
         final slidedBoard = Board(
             blocks: normalBoard.blocks.indexedMap(
@@ -268,7 +250,7 @@ void main() {
           BlockPoint.empty
         ];
 
-        final cubit = PuzzleCubit()..initWithBoard(normalBoard);
+        final cubit = PuzzleCubit()..initWithBoard(normalBoard, BoardScore(0));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.up(),
@@ -315,12 +297,8 @@ void main() {
           BlockPoint.four.mergedPoint(),
         ];
         final boardSize = BoardSize(3);
-        final board = Board(
-            blocks: List.generate(
-                boardSize.totalSize,
-                (index) => Block.empty(index: index, boardSize: boardSize.value)
-                    .copyWith(point: points[index])));
-        final cubit = PuzzleCubit()..initWithBoard(board);
+        final board = Board.fromPoints(points: points, size: boardSize);
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(0));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.left(),
