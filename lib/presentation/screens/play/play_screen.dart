@@ -21,14 +21,22 @@ class PlayScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
-                children: [Text("Score"), Text("2967")],
+                children: [
+                  Text("High Score"),
+                  Text("2967"),
+                ],
               ),
               IconButton(
                 icon: Icon(MyIcons.home),
                 onPressed: () => _goHome(context),
               ),
               Column(
-                children: [Text("High Score"), Text("52267")],
+                children: [
+                  Text("Score"),
+                  BlocBuilder<PuzzleCubit, PuzzleState>(
+                    builder: (_, state) => Text("${state.score.value}"),
+                  ),
+                ],
               ),
             ],
           ),
