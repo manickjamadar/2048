@@ -19,4 +19,5 @@ class MyIcons {
   static const IconData musicOff = Icons.volume_off;
   static const IconData delete = Icons.delete_forever;
   static const IconData play = Icons.play_arrow;
+  static const IconData share = Icons.share;
 }

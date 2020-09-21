@@ -51,10 +51,6 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {},
               ),
               IconButton(
-                icon: Icon(MyIcons.rating),
-                onPressed: () {},
-              ),
-              IconButton(
                 icon: Icon(MyIcons.about),
                 onPressed: () {
                   Navigator.push(
@@ -65,6 +61,10 @@ class HomeScreen extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(MyIcons.save),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: Icon(MyIcons.share),
                 onPressed: () {},
               ),
             ],
