@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
+import 'package:twozerofoureight/presentation/screens/play/play_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -34,7 +37,13 @@ class HomeScreen extends StatelessWidget {
               )),
           RaisedButton(
             child: Text("Play"),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => PlayScreen.generateRoute(
+                          puzzleCubit: PuzzleCubit()..init(BoardSize(4)))));
+            },
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
