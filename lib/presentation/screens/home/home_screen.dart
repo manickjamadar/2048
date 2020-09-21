@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
+import 'package:twozerofoureight/presentation/screens/about/about_screen.dart';
 import 'package:twozerofoureight/presentation/screens/play/play_screen.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -58,7 +59,12 @@ class HomeScreen extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(MyIcons.about),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => AboutScreen.generateRoute()));
+                },
               ),
               IconButton(
                 icon: Icon(MyIcons.save),
