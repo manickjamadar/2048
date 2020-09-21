@@ -25,7 +25,7 @@ class PlayScreen extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(MyIcons.home),
-                onPressed: () {},
+                onPressed: () => _goHome(context),
               ),
               Column(
                 children: [Text("High Score"), Text("52267")],
@@ -65,5 +65,9 @@ class PlayScreen extends StatelessWidget {
 
   void _resetBoard(BuildContext context) {
     BlocProvider.of<PuzzleCubit>(context).reset();
+  }
+
+  void _goHome(BuildContext context) {
+    Navigator.pop(context);
   }
 }
