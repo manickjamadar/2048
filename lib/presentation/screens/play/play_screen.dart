@@ -39,7 +39,7 @@ class PlayScreen extends StatelessWidget {
                 children: [
                   IconButton(
                     icon: Icon(MyIcons.reset),
-                    onPressed: () {},
+                    onPressed: () => _resetBoard(context),
                   ),
                   IconButton(
                     icon: Icon(MyIcons.music),
@@ -61,5 +61,9 @@ class PlayScreen extends StatelessWidget {
         ],
       ),
     ));
+  }
+
+  void _resetBoard(BuildContext context) {
+    BlocProvider.of<PuzzleCubit>(context).reset();
   }
 }
