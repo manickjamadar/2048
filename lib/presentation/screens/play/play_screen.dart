@@ -60,7 +60,25 @@ class PlayScreen extends StatelessWidget {
               })
             ],
           ),
-          BoardViewer()
+          BlocBuilder<PuzzleCubit, PuzzleState>(
+            builder: (_, state) {
+              return Stack(
+                children: [
+                  BoardViewer(),
+                  if (state.isGameOver)
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withOpacity(0.4),
+                        child: Center(
+                            child: Text("Game Over",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 40))),
+                      ),
+                    )
+                ],
+              );
+            },
+          )
         ],
       ),
     ));
