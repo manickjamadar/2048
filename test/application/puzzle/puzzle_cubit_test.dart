@@ -257,7 +257,7 @@ void main() {
             slideDuration: duration,
             mergeDuration: duration);
         cubit.slide(
-            direction: BoardDirection.up(),
+            direction: BoardDirection.left(),
             slideDuration: duration,
             mergeDuration: duration);
         expect(cubit.state.mainBoard, equals(slidedBoard));
@@ -307,6 +307,111 @@ void main() {
         await Future.delayed(Duration(milliseconds: 1700));
         expect(cubit.state.previousBoard, isNot(equals(None())));
         expect(cubit.state.isGameOver, isTrue);
+      });
+    });
+    group("score test => ", () {
+      test("should increase correct score for intial board slide", () async {
+        final boardSize = BoardSize(3);
+        final points = [
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.two,
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+        ];
+        final board = Board.fromPoints(points: points, size: boardSize);
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(0));
+        final duration = Duration(milliseconds: 100);
+        cubit.slide(
+            direction: BoardDirection.left(),
+            slideDuration: duration,
+            mergeDuration: duration);
+        await Future.delayed(Duration(milliseconds: 300));
+        expect(cubit.state.score.value, equals(4));
+      });
+      test("should increase correct score after slide", () async {
+        final points = [
+          BlockPoint.two,
+          BlockPoint.four.mergedPoint(),
+          BlockPoint.four.mergedPoint(),
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.four,
+        ];
+        final board = Board.fromPoints(points: points, size: BoardSize(3));
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(0));
+        final duration = Duration(milliseconds: 100);
+        cubit.slide(
+            direction: BoardDirection.left(),
+            slideDuration: duration,
+            mergeDuration: duration);
+        await Future.delayed(Duration(milliseconds: 230));
+        expect(cubit.state.score.value, equals(4 + 16));
+      });
+      test("should increase correct score after slide twice", () async {
+        final points = [
+          BlockPoint.two,
+          BlockPoint.two,
+          BlockPoint.four,
+          BlockPoint.four,
+          BlockPoint.empty,
+          BlockPoint.four,
+          BlockPoint.four,
+          BlockPoint.empty,
+          BlockPoint.four,
+        ];
+        final board = Board.fromPoints(points: points, size: BoardSize(3));
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(16));
+        final duration = Duration(milliseconds: 100);
+        cubit.slide(
+            direction: BoardDirection.left(),
+            slideDuration: duration,
+            mergeDuration: duration);
+        await Future.delayed(Duration(milliseconds: 230));
+        expect(cubit.state.score.value, equals(36));
+        cubit.slide(
+            direction: BoardDirection.right(),
+            slideDuration: duration,
+            mergeDuration: duration);
+        await Future.delayed(Duration(milliseconds: 230));
+        expect(cubit.state.score.value, greaterThan(36));
+      });
+      test("should correctly undo score", () async {
+        final points = [
+          BlockPoint.two,
+          BlockPoint.two,
+          BlockPoint.four,
+          BlockPoint.four,
+          BlockPoint.empty,
+          BlockPoint.four,
+          BlockPoint.four,
+          BlockPoint.empty,
+          BlockPoint.four,
+        ];
+        final board = Board.fromPoints(points: points, size: BoardSize(3));
+        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(16));
+        final duration = Duration(milliseconds: 100);
+        cubit.slide(
+            direction: BoardDirection.left(),
+            slideDuration: duration,
+            mergeDuration: duration);
+        await Future.delayed(Duration(milliseconds: 230));
+        expect(cubit.state.score.value, equals(36));
+        cubit.slide(
+            direction: BoardDirection.right(),
+            slideDuration: duration,
+            mergeDuration: duration);
+        await Future.delayed(Duration(milliseconds: 230));
+        expect(cubit.state.score.value, greaterThan(36));
+        cubit.undo();
+        expect(cubit.state.score.value, equals(36));
       });
     });
   });
