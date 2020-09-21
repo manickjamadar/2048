@@ -51,10 +51,13 @@ class PlayScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              IconButton(
-                icon: Icon(MyIcons.undo),
-                onPressed: () {},
-              )
+              BlocBuilder<PuzzleCubit, PuzzleState>(builder: (_, state) {
+                return IconButton(
+                  icon: Icon(MyIcons.undo),
+                  onPressed: state.previousBoard
+                      .fold(() => null, (a) => () => _undoMove(context)),
+                );
+              })
             ],
           ),
           BoardViewer()
@@ -69,5 +72,9 @@ class PlayScreen extends StatelessWidget {
 
   void _goHome(BuildContext context) {
     Navigator.pop(context);
+  }
+
+  void _undoMove(BuildContext context) {
+    BlocProvider.of<PuzzleCubit>(context).undo();
   }
 }

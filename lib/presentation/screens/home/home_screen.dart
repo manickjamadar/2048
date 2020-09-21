@@ -26,12 +26,9 @@ class HomeScreen extends StatelessWidget {
           SizedBox(
               height: 200,
               child: ListWheelScrollView(
-                controller: FixedExtentScrollController(initialItem: 3),
+                controller: FixedExtentScrollController(initialItem: 1),
                 overAndUnderCenterOpacity: 0.2,
                 clipBehavior: Clip.none,
-                onSelectedItemChanged: (value) {
-                  print(value);
-                },
                 itemExtent: 50,
                 children:
                     boards.map((board) => Text(board, style: style)).toList(),
