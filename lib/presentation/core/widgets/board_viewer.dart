@@ -142,7 +142,7 @@ class _BoardViewerState extends State<BoardViewer>
   }
 
   void _onSwipe(PuzzleState state, BoardDirection direction) {
-    if (!state.slidable) {
+    if (!state.slidable || direction == null) {
       return;
     }
     BlocProvider.of<PuzzleCubit>(context).slide(
