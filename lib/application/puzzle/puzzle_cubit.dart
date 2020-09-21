@@ -11,6 +11,7 @@ import 'package:twozerofoureight/domain/core/logic/board_actors/merge_only_actor
 import 'package:twozerofoureight/domain/core/logic/board_actors/slide_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
+import 'package:twozerofoureight/domain/puzzle/value_objects/board_score.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 
 part 'puzzle_state.dart';
@@ -23,6 +24,8 @@ class PuzzleCubit extends Cubit<PuzzleState> {
     return !hasAnyEmptyBlocks(board.blocks) && !board.slidable;
   }
 
+  BoardScore _previousScore = BoardScore(0);
+
   //events
   void init(BoardSize size) {
     final mainBoard = Board.empty(size);
@@ -32,12 +35,13 @@ class PuzzleCubit extends Cubit<PuzzleState> {
         slidable: true,
         previousBoard: None(),
         boardSize: size,
+        score: BoardScore(0),
         mainBoard:
             ActionRunner(GenerateRandomBoardActor(mainBoard, count: 2)).run(),
         mergeOnlyBoard: mergeOnlyBoard));
   }
 
-  void initWithBoard(Board board) {
+  void initWithBoard(Board board, BoardScore score) {
     if (!board.isValid) {
       throw UnsupportedError("Board size is invalid");
     }
@@ -50,6 +54,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
         mergeOnlyBoard: mergeOnlyBoard,
         previousBoard: None(),
         slidable: true,
+        score: score,
         isGameOver: _getGameOverStatus(board)));
   }
 
@@ -96,8 +101,13 @@ class PuzzleCubit extends Cubit<PuzzleState> {
   }
 
   void _mergeCompleted() {
+    _previousScore = state.score;
+    final currentScore = state.score.add(state.mergeOnlyBoard);
     emit(state.copyWith(
-        mergeOnlyBoard: Board.empty(state.boardSize), slidable: true));
+      mergeOnlyBoard: Board.empty(state.boardSize),
+      slidable: true,
+      score: currentScore,
+    ));
   }
 
   void undo() {
@@ -105,6 +115,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
       emit(state.copyWith(
         isGameOver: false,
         mainBoard: board,
+        score: _previousScore,
         previousBoard: None(),
       ));
     });

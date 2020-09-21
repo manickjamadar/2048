@@ -19,7 +19,8 @@ class _$PuzzleStateTearOff {
       @required Board mergeOnlyBoard,
       dynamic isGameOver = false,
       @required Option<Board> previousBoard,
-      dynamic slidable = true}) {
+      dynamic slidable = true,
+      @required BoardScore score}) {
     return _PuzzleState(
       boardSize: boardSize,
       mainBoard: mainBoard,
@@ -27,6 +28,7 @@ class _$PuzzleStateTearOff {
       isGameOver: isGameOver,
       previousBoard: previousBoard,
       slidable: slidable,
+      score: score,
     );
   }
 }
@@ -41,6 +43,7 @@ mixin _$PuzzleState {
   dynamic get isGameOver;
   Option<Board> get previousBoard;
   dynamic get slidable;
+  BoardScore get score;
 
   $PuzzleStateCopyWith<PuzzleState> get copyWith;
 }
@@ -55,7 +58,8 @@ abstract class $PuzzleStateCopyWith<$Res> {
       Board mergeOnlyBoard,
       dynamic isGameOver,
       Option<Board> previousBoard,
-      dynamic slidable});
+      dynamic slidable,
+      BoardScore score});
 
   $BoardCopyWith<$Res> get mainBoard;
   $BoardCopyWith<$Res> get mergeOnlyBoard;
@@ -76,6 +80,7 @@ class _$PuzzleStateCopyWithImpl<$Res> implements $PuzzleStateCopyWith<$Res> {
     Object isGameOver = freezed,
     Object previousBoard = freezed,
     Object slidable = freezed,
+    Object score = freezed,
   }) {
     return _then(_value.copyWith(
       boardSize:
@@ -90,6 +95,7 @@ class _$PuzzleStateCopyWithImpl<$Res> implements $PuzzleStateCopyWith<$Res> {
           ? _value.previousBoard
           : previousBoard as Option<Board>,
       slidable: slidable == freezed ? _value.slidable : slidable as dynamic,
+      score: score == freezed ? _value.score : score as BoardScore,
     ));
   }
 
@@ -126,7 +132,8 @@ abstract class _$PuzzleStateCopyWith<$Res>
       Board mergeOnlyBoard,
       dynamic isGameOver,
       Option<Board> previousBoard,
-      dynamic slidable});
+      dynamic slidable,
+      BoardScore score});
 
   @override
   $BoardCopyWith<$Res> get mainBoard;
@@ -151,6 +158,7 @@ class __$PuzzleStateCopyWithImpl<$Res> extends _$PuzzleStateCopyWithImpl<$Res>
     Object isGameOver = freezed,
     Object previousBoard = freezed,
     Object slidable = freezed,
+    Object score = freezed,
   }) {
     return _then(_PuzzleState(
       boardSize:
@@ -164,6 +172,7 @@ class __$PuzzleStateCopyWithImpl<$Res> extends _$PuzzleStateCopyWithImpl<$Res>
           ? _value.previousBoard
           : previousBoard as Option<Board>,
       slidable: slidable == freezed ? _value.slidable : slidable,
+      score: score == freezed ? _value.score : score as BoardScore,
     ));
   }
 }
@@ -175,13 +184,15 @@ class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
       @required this.mergeOnlyBoard,
       this.isGameOver = false,
       @required this.previousBoard,
-      this.slidable = true})
+      this.slidable = true,
+      @required this.score})
       : assert(boardSize != null),
         assert(mainBoard != null),
         assert(mergeOnlyBoard != null),
         assert(isGameOver != null),
         assert(previousBoard != null),
-        assert(slidable != null);
+        assert(slidable != null),
+        assert(score != null);
 
   @override
   final BoardSize boardSize;
@@ -197,10 +208,12 @@ class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
   @JsonKey(defaultValue: true)
   @override
   final dynamic slidable;
+  @override
+  final BoardScore score;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PuzzleState(boardSize: $boardSize, mainBoard: $mainBoard, mergeOnlyBoard: $mergeOnlyBoard, isGameOver: $isGameOver, previousBoard: $previousBoard, slidable: $slidable)';
+    return 'PuzzleState(boardSize: $boardSize, mainBoard: $mainBoard, mergeOnlyBoard: $mergeOnlyBoard, isGameOver: $isGameOver, previousBoard: $previousBoard, slidable: $slidable, score: $score)';
   }
 
   @override
@@ -213,7 +226,8 @@ class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
       ..add(DiagnosticsProperty('mergeOnlyBoard', mergeOnlyBoard))
       ..add(DiagnosticsProperty('isGameOver', isGameOver))
       ..add(DiagnosticsProperty('previousBoard', previousBoard))
-      ..add(DiagnosticsProperty('slidable', slidable));
+      ..add(DiagnosticsProperty('slidable', slidable))
+      ..add(DiagnosticsProperty('score', score));
   }
 
   @override
@@ -237,7 +251,9 @@ class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
                     .equals(other.previousBoard, previousBoard)) &&
             (identical(other.slidable, slidable) ||
                 const DeepCollectionEquality()
-                    .equals(other.slidable, slidable)));
+                    .equals(other.slidable, slidable)) &&
+            (identical(other.score, score) ||
+                const DeepCollectionEquality().equals(other.score, score)));
   }
 
   @override
@@ -248,7 +264,8 @@ class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
       const DeepCollectionEquality().hash(mergeOnlyBoard) ^
       const DeepCollectionEquality().hash(isGameOver) ^
       const DeepCollectionEquality().hash(previousBoard) ^
-      const DeepCollectionEquality().hash(slidable);
+      const DeepCollectionEquality().hash(slidable) ^
+      const DeepCollectionEquality().hash(score);
 
   @override
   _$PuzzleStateCopyWith<_PuzzleState> get copyWith =>
@@ -262,7 +279,8 @@ abstract class _PuzzleState implements PuzzleState {
       @required Board mergeOnlyBoard,
       dynamic isGameOver,
       @required Option<Board> previousBoard,
-      dynamic slidable}) = _$_PuzzleState;
+      dynamic slidable,
+      @required BoardScore score}) = _$_PuzzleState;
 
   @override
   BoardSize get boardSize;
@@ -276,6 +294,8 @@ abstract class _PuzzleState implements PuzzleState {
   Option<Board> get previousBoard;
   @override
   dynamic get slidable;
+  @override
+  BoardScore get score;
   @override
   _$PuzzleStateCopyWith<_PuzzleState> get copyWith;
 }
