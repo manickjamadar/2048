@@ -8,6 +8,7 @@ part 'board_option_cubit.freezed.dart';
 class BoardOptionCubit extends Cubit<BoardOptionState> {
   BoardOptionCubit() : super(BoardOptionState.initial());
 
+  BoardOption get currentOption => state.options[state.currentOptionIndex];
   //events
   void change(int index) {
     if (index < 0 || index >= state.options.length) {
