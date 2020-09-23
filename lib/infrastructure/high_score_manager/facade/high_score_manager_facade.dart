@@ -28,8 +28,12 @@ class HighScoreManagerFacade extends IHighScoreManagerFacade {
 
   @override
   Future<Either<Error, BoardScore>> get(BoardOption option) async {
-    final box = await getBox;
-    final scoreValue = box.get(option.size.value, defaultValue: 0);
-    return Right(BoardScore(scoreValue));
+    try {
+      final box = await getBox;
+      final scoreValue = box.get(option.size.value, defaultValue: 0);
+      return Right(BoardScore(scoreValue));
+    } catch (_) {
+      return Left(Error());
+    }
   }
 }
