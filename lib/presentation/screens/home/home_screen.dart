@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
-import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
+import "../../../application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/screens/about/about_screen.dart';
 import 'package:twozerofoureight/presentation/screens/play/play_screen.dart';
@@ -94,6 +94,9 @@ class HomeScreen extends StatelessWidget {
         context,
         MaterialPageRoute(
             builder: (_) => PlayScreen.generateRoute(
-                puzzleCubit: PuzzleCubit()..init(currentOption.size))));
+                puzzleCubit: PuzzleCubit(
+                    highScoreManagerCubit:
+                        BlocProvider.of<HighScoreManagerCubit>(context))
+                  ..init(currentOption.size))));
   }
 }

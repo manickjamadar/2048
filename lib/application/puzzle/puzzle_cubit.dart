@@ -13,12 +13,14 @@ import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_score.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
-
+import '../high_score_manager/high_score_manager_cubit.dart';
 part 'puzzle_state.dart';
 part 'puzzle_cubit.freezed.dart';
 
 class PuzzleCubit extends Cubit<PuzzleState> {
-  PuzzleCubit() : super(PuzzleState.initial());
+  final HighScoreManagerCubit highScoreManagerCubit;
+  PuzzleCubit({@required this.highScoreManagerCubit})
+      : super(PuzzleState.initial());
 
   bool _getGameOverStatus(Board board) {
     return !hasAnyEmptyBlocks(board.blocks) && !board.slidable;
@@ -108,6 +110,9 @@ class PuzzleCubit extends Cubit<PuzzleState> {
       slidable: true,
       score: currentScore,
     ));
+    if (currentScore.value > highScoreManagerCubit.state.score.value) {
+      highScoreManagerCubit.save(currentScore);
+    }
   }
 
   void undo() {

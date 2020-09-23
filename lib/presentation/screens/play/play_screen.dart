@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/board_viewer.dart';
+import "package:twozerofoureight/application/high_score_manager/high_score_manager_cubit.dart";
 
 class PlayScreen extends StatelessWidget {
   static const String routeName = "/play";
@@ -23,7 +24,9 @@ class PlayScreen extends StatelessWidget {
               Column(
                 children: [
                   Text("High Score"),
-                  Text("2967"),
+                  BlocBuilder<HighScoreManagerCubit, HighScoreManagerState>(
+                    builder: (_, state) => Text("${state.score.value}"),
+                  ),
                 ],
               ),
               IconButton(
