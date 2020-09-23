@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/get_empty_blocks.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
@@ -9,11 +10,20 @@ import 'package:twozerofoureight/domain/puzzle/value_objects/block_point.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_score.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 import 'package:twozerofoureight/helpers/list_extensions.dart';
+import 'package:twozerofoureight/application/high_score_manager/high_score_manager_cubit.dart';
+
+class MockHighScoreManagerCubit extends Mock implements HighScoreManagerCubit {}
 
 void main() {
   group("Puzzle cubit test => ", () {
+    MockHighScoreManagerCubit scoreManager;
+    setUp(() {
+      scoreManager = MockHighScoreManagerCubit();
+      when(scoreManager.state)
+          .thenReturn(HighScoreManagerState(score: BoardScore(10)));
+    });
     test("should return intial state init with board size 3", () {
-      final cubit = PuzzleCubit();
+      final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager);
       final boardSize = BoardSize(3);
       cubit.init(boardSize);
 
@@ -40,13 +50,16 @@ void main() {
           Block.random(index: 3, boardSize: 3),
           Block.random(index: 3, boardSize: 3),
         ]);
-        expect(() => PuzzleCubit().initWithBoard(board, BoardScore(34)),
+        expect(
+            () => PuzzleCubit(highScoreManagerCubit: scoreManager)
+                .initWithBoard(board, BoardScore(34)),
             throwsA(isA<UnsupportedError>()));
       });
       test("should return correct state with init with board with size 3", () {
         final board = Board.empty(BoardSize(3));
         board.blocks[0] = Block.random(index: 3, boardSize: 3);
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(23));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(23));
 
         expect(
             cubit.state,
@@ -74,7 +87,8 @@ void main() {
           BlockPoint.two,
         ];
         final board = Board.fromPoints(points: points, size: BoardSize(3));
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(34));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(34));
         expect(
             cubit.state,
             equals(PuzzleState(
@@ -87,7 +101,7 @@ void main() {
                 previousBoard: None())));
       });
       test('should generate two random block if board is empty', () {
-        final cubit = PuzzleCubit();
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager);
         final boardSize = BoardSize(3);
         cubit.initWithBoard(Board.empty(boardSize), BoardScore(0));
         expect(
@@ -122,7 +136,8 @@ void main() {
         ];
         final boardSize = BoardSize(3);
         final board = Board.fromPoints(points: points, size: boardSize);
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(45));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(45));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -166,7 +181,8 @@ void main() {
           ];
           final boardSize = BoardSize(3);
           final board = Board.fromPoints(points: points, size: boardSize);
-          final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(56));
+          final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+            ..initWithBoard(board, BoardScore(56));
           cubit.undo();
           expect(cubit.state.mainBoard, equals(board));
         },
@@ -186,7 +202,8 @@ void main() {
         ];
         final boardSize = BoardSize(3);
         final board = Board.fromPoints(points: points, size: boardSize);
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(47));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(47));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -250,7 +267,8 @@ void main() {
           BlockPoint.empty
         ];
 
-        final cubit = PuzzleCubit()..initWithBoard(normalBoard, BoardScore(0));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(normalBoard, BoardScore(0));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.up(),
@@ -298,7 +316,8 @@ void main() {
         ];
         final boardSize = BoardSize(3);
         final board = Board.fromPoints(points: points, size: boardSize);
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(0));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(0));
         final duration = Duration(milliseconds: 800);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -324,7 +343,8 @@ void main() {
           BlockPoint.empty,
         ];
         final board = Board.fromPoints(points: points, size: boardSize);
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(0));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(0));
         final duration = Duration(milliseconds: 100);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -332,6 +352,7 @@ void main() {
             mergeDuration: duration);
         await Future.delayed(Duration(milliseconds: 300));
         expect(cubit.state.score.value, equals(4));
+        verifyNever(scoreManager.save(any));
       });
       test("should increase correct score after slide", () async {
         final points = [
@@ -346,7 +367,8 @@ void main() {
           BlockPoint.four,
         ];
         final board = Board.fromPoints(points: points, size: BoardSize(3));
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(0));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(0));
         final duration = Duration(milliseconds: 100);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -354,6 +376,7 @@ void main() {
             mergeDuration: duration);
         await Future.delayed(Duration(milliseconds: 230));
         expect(cubit.state.score.value, equals(4 + 16));
+        verify(scoreManager.save(any)).called(1);
       });
       test("should increase correct score after slide twice", () async {
         final points = [
@@ -368,7 +391,8 @@ void main() {
           BlockPoint.four,
         ];
         final board = Board.fromPoints(points: points, size: BoardSize(3));
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(16));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(16));
         final duration = Duration(milliseconds: 100);
         cubit.slide(
             direction: BoardDirection.left(),
@@ -396,7 +420,8 @@ void main() {
           BlockPoint.four,
         ];
         final board = Board.fromPoints(points: points, size: BoardSize(3));
-        final cubit = PuzzleCubit()..initWithBoard(board, BoardScore(16));
+        final cubit = PuzzleCubit(highScoreManagerCubit: scoreManager)
+          ..initWithBoard(board, BoardScore(16));
         final duration = Duration(milliseconds: 100);
         cubit.slide(
             direction: BoardDirection.left(),
