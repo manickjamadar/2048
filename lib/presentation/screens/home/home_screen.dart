@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
 import "../../../application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
@@ -12,41 +13,43 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Icon(MyIcons.logo, size: 100),
-          buildBoardOptionWheel(context),
-          buildPlayButton(context),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                icon: Icon(MyIcons.colorPallete),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(MyIcons.about),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => AboutScreen.generateRoute()));
-                },
-              ),
-              IconButton(
-                icon: Icon(MyIcons.save),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(MyIcons.share),
-                onPressed: () {},
-              ),
-            ],
-          )
-        ],
+        body: ThemeBackgroundView(
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Icon(MyIcons.logo, size: 100),
+            buildBoardOptionWheel(context),
+            buildPlayButton(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(MyIcons.colorPallete),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(MyIcons.about),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => AboutScreen.generateRoute()));
+                  },
+                ),
+                IconButton(
+                  icon: Icon(MyIcons.save),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(MyIcons.share),
+                  onPressed: () {},
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     ));
   }
