@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
 import "../../../application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/screens/about/about_screen.dart';
@@ -51,24 +52,15 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildBoardOptionWheel(BuildContext context) {
-    final style = TextStyle(fontSize: 30, color: Colors.red);
     return SizedBox(
         height: 200,
         child: BlocBuilder<BoardOptionCubit, BoardOptionState>(
             builder: (_, state) {
-          return ListWheelScrollView(
-            controller: FixedExtentScrollController(
-                initialItem: state.currentOptionIndex),
-            overAndUnderCenterOpacity: 0.2,
-            onSelectedItemChanged: (int index) =>
-                _onOptionChange(context, index),
-            clipBehavior: Clip.none,
-            itemExtent: 50,
-            children: state.options
-                .map((option) => Text(
-                    "${option.title} ${option.size.value} x ${option.size.value}",
-                    style: style))
-                .toList(),
+          return BoardOptionWheel(
+            currentIndex: state.currentOptionIndex,
+            isLoading: state.isLoading,
+            options: state.options,
+            onChange: (index) => _onOptionChange(context, index),
           );
         }));
   }
