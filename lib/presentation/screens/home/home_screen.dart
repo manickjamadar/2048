@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
+import 'package:twozerofoureight/presentation/screens/home/widgets/theme_color_picker.dart';
 import "../../../application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/screens/about/about_screen.dart';
@@ -27,7 +29,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 IconButton(
                   icon: Icon(MyIcons.colorPallete),
-                  onPressed: () {},
+                  onPressed: () => _onPickTheme(context),
                 ),
                 IconButton(
                   icon: Icon(MyIcons.about),
@@ -77,6 +79,23 @@ class HomeScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _onPickTheme(BuildContext context) async {
+    final state = BlocProvider.of<ThemeColorCubit>(context).state;
+    final int newIndex = await showDialog(
+        context: context,
+        builder: (_) => ThemeColorPicker(
+              themeColors: state.themeColors,
+              currentIndex: state.currentIndex,
+            ));
+    if (newIndex != null) {
+      _onThemeChange(context, newIndex);
+    }
+  }
+
+  void _onThemeChange(BuildContext context, int index) {
+    BlocProvider.of<ThemeColorCubit>(context).change(index);
   }
 
   void _onOptionChange(BuildContext context, int index) {
