@@ -34,7 +34,6 @@ class _BoardViewerState extends State<BoardViewer>
     ]).animate(CurvedAnimation(curve: curve, parent: _controller));
   }
 
-  double get tilePadding => 4.0;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PuzzleCubit, PuzzleState>(
@@ -47,24 +46,30 @@ class _BoardViewerState extends State<BoardViewer>
               aspectRatio: 1,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(6),
-                child: Container(
-                    color: Colors.black.withOpacity(0.2),
-                    padding: EdgeInsets.all(tilePadding),
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        final parentWidth = constraints.biggest.width;
-                        final tileSize = parentWidth / state.boardSize.value;
-                        return Stack(
-                          children: [
-                            buildBackgroundTilStack(state.boardSize, tileSize),
-                            buildAnimatedBlockTileStack(
-                                state.mainBoard, tileSize),
-                            buildMergeOnlyBlockTileStack(
-                                state.mergeOnlyBoard, tileSize),
-                          ],
-                        );
-                      },
-                    )),
+                child: LayoutBuilder(
+                  builder: (_, constraints) {
+                    final boardSize = state.boardSize.value;
+                    final parentWidth = constraints.biggest.width;
+                    final approxTileSize = parentWidth / boardSize;
+                    final padding = approxTileSize * 0.035;
+                    final actualParentWidth = parentWidth - (padding * 2);
+                    final tileSize = actualParentWidth / boardSize;
+                    return Container(
+                      color: Colors.black.withOpacity(0.2),
+                      padding: EdgeInsets.all(padding),
+                      child: Stack(
+                        children: [
+                          buildBackgroundTilStack(
+                              state.boardSize, tileSize, padding),
+                          buildAnimatedBlockTileStack(
+                              state.mainBoard, tileSize, padding),
+                          buildMergeOnlyBlockTileStack(
+                              state.mergeOnlyBoard, tileSize, padding),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
           ),
@@ -73,7 +78,8 @@ class _BoardViewerState extends State<BoardViewer>
     );
   }
 
-  Stack buildMergeOnlyBlockTileStack(Board board, double tileSize) {
+  Stack buildMergeOnlyBlockTileStack(
+      Board board, double tileSize, double tilePadding) {
     return Stack(
         children: board.blocks
             .map((block) => MergeOnlyBlockTile(
@@ -89,7 +95,8 @@ class _BoardViewerState extends State<BoardViewer>
             .toList());
   }
 
-  Stack buildAnimatedBlockTileStack(Board board, double tileSize) {
+  Stack buildAnimatedBlockTileStack(
+      Board board, double tileSize, double tilePadding) {
     return Stack(
         children: board.blocks
             .map((block) => AnimatedBlockTile(
@@ -104,7 +111,8 @@ class _BoardViewerState extends State<BoardViewer>
             .toList());
   }
 
-  Stack buildBackgroundTilStack(BoardSize boardSize, double tileSize) {
+  Stack buildBackgroundTilStack(
+      BoardSize boardSize, double tileSize, double tilePadding) {
     return Stack(
       children: List.generate(
           boardSize.totalSize,
