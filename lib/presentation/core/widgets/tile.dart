@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinycolor/tinycolor.dart';
 
 class Tile extends StatelessWidget {
   final double size;
@@ -19,6 +20,7 @@ class Tile extends StatelessWidget {
   Widget build(BuildContext context) {
     final actualSize = size - (padding * 2);
     final fontSize = actualSize * 0.35;
+    final tinyColor = TinyColor(color);
     return Container(
       padding: EdgeInsets.all(padding),
       child: ClipRRect(
@@ -32,7 +34,10 @@ class Tile extends StatelessWidget {
             fit: BoxFit.scaleDown,
             child: Text(
               value,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSize,
+                  color: tinyColor.isLight() ? Colors.black : Colors.white),
             ),
           ),
         ),
