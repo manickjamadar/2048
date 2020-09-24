@@ -18,20 +18,24 @@ class Tile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final actualSize = size - (padding * 2);
+    final fontSize = actualSize * 0.35;
     return Container(
       padding: EdgeInsets.all(padding),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(radius),
         child: Container(
-            width: actualSize,
-            height: actualSize,
-            color: color,
-            child: Center(
-              child: Text(
-                value,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            )),
+          width: actualSize,
+          height: actualSize,
+          padding: EdgeInsets.all(8),
+          color: color,
+          child: FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              value,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize),
+            ),
+          ),
+        ),
       ),
     );
   }
