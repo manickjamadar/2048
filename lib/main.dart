@@ -11,7 +11,7 @@ import 'application/high_score_manager/high_score_manager_cubit.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  initServiceLocator();
+  await initServiceLocator();
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
