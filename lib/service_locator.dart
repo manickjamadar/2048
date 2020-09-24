@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
+import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/domain/board_option/facade/board_option_facade.dart';
 import 'package:twozerofoureight/domain/high_score_manager/facade/high_score_manager_facade.dart';
 import 'package:twozerofoureight/infrastructure/board_option/facade/board_option_facade.dart';
@@ -16,6 +17,7 @@ Future<void> initServiceLocator() async {
 void initBloc() {
   locator.registerFactory<BoardOptionCubit>(
       () => BoardOptionCubit(boardOptionFacade: locator<IBoardOptionFacade>()));
+  locator.registerFactory<ThemeColorCubit>(() => ThemeColorCubit());
 }
 
 Future<void> initFacade() async {
