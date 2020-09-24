@@ -12,7 +12,8 @@ abstract class BoardOptionState with _$BoardOptionState {
       BoardOption(title: "Classic", size: BoardSize(4)),
       BoardOption(title: "Big", size: BoardSize(5)),
       BoardOption(title: "Bigger", size: BoardSize(6)),
-      BoardOption(title: "Huge", size: BoardSize(7)),
+      BoardOption(title: "Biggest", size: BoardSize(7)),
+      BoardOption(title: "Giant", size: BoardSize(8)),
     ]);
   }
 }
