@@ -14,9 +14,12 @@ class _$BoardOptionStateTearOff {
 
 // ignore: unused_element
   _BoardOptionState call(
-      {@required int currentOptionIndex, @required List<BoardOption> options}) {
+      {@required int currentOptionIndex,
+      @required bool isLoading,
+      @required List<BoardOption> options}) {
     return _BoardOptionState(
       currentOptionIndex: currentOptionIndex,
+      isLoading: isLoading,
       options: options,
     );
   }
@@ -27,6 +30,7 @@ const $BoardOptionState = _$BoardOptionStateTearOff();
 
 mixin _$BoardOptionState {
   int get currentOptionIndex;
+  bool get isLoading;
   List<BoardOption> get options;
 
   $BoardOptionStateCopyWith<BoardOptionState> get copyWith;
@@ -36,7 +40,8 @@ abstract class $BoardOptionStateCopyWith<$Res> {
   factory $BoardOptionStateCopyWith(
           BoardOptionState value, $Res Function(BoardOptionState) then) =
       _$BoardOptionStateCopyWithImpl<$Res>;
-  $Res call({int currentOptionIndex, List<BoardOption> options});
+  $Res call(
+      {int currentOptionIndex, bool isLoading, List<BoardOption> options});
 }
 
 class _$BoardOptionStateCopyWithImpl<$Res>
@@ -50,12 +55,14 @@ class _$BoardOptionStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object currentOptionIndex = freezed,
+    Object isLoading = freezed,
     Object options = freezed,
   }) {
     return _then(_value.copyWith(
       currentOptionIndex: currentOptionIndex == freezed
           ? _value.currentOptionIndex
           : currentOptionIndex as int,
+      isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
       options:
           options == freezed ? _value.options : options as List<BoardOption>,
     ));
@@ -68,7 +75,8 @@ abstract class _$BoardOptionStateCopyWith<$Res>
           _BoardOptionState value, $Res Function(_BoardOptionState) then) =
       __$BoardOptionStateCopyWithImpl<$Res>;
   @override
-  $Res call({int currentOptionIndex, List<BoardOption> options});
+  $Res call(
+      {int currentOptionIndex, bool isLoading, List<BoardOption> options});
 }
 
 class __$BoardOptionStateCopyWithImpl<$Res>
@@ -84,12 +92,14 @@ class __$BoardOptionStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object currentOptionIndex = freezed,
+    Object isLoading = freezed,
     Object options = freezed,
   }) {
     return _then(_BoardOptionState(
       currentOptionIndex: currentOptionIndex == freezed
           ? _value.currentOptionIndex
           : currentOptionIndex as int,
+      isLoading: isLoading == freezed ? _value.isLoading : isLoading as bool,
       options:
           options == freezed ? _value.options : options as List<BoardOption>,
     ));
@@ -98,18 +108,23 @@ class __$BoardOptionStateCopyWithImpl<$Res>
 
 class _$_BoardOptionState implements _BoardOptionState {
   const _$_BoardOptionState(
-      {@required this.currentOptionIndex, @required this.options})
+      {@required this.currentOptionIndex,
+      @required this.isLoading,
+      @required this.options})
       : assert(currentOptionIndex != null),
+        assert(isLoading != null),
         assert(options != null);
 
   @override
   final int currentOptionIndex;
   @override
+  final bool isLoading;
+  @override
   final List<BoardOption> options;
 
   @override
   String toString() {
-    return 'BoardOptionState(currentOptionIndex: $currentOptionIndex, options: $options)';
+    return 'BoardOptionState(currentOptionIndex: $currentOptionIndex, isLoading: $isLoading, options: $options)';
   }
 
   @override
@@ -119,6 +134,9 @@ class _$_BoardOptionState implements _BoardOptionState {
             (identical(other.currentOptionIndex, currentOptionIndex) ||
                 const DeepCollectionEquality()
                     .equals(other.currentOptionIndex, currentOptionIndex)) &&
+            (identical(other.isLoading, isLoading) ||
+                const DeepCollectionEquality()
+                    .equals(other.isLoading, isLoading)) &&
             (identical(other.options, options) ||
                 const DeepCollectionEquality().equals(other.options, options)));
   }
@@ -127,6 +145,7 @@ class _$_BoardOptionState implements _BoardOptionState {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(currentOptionIndex) ^
+      const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(options);
 
   @override
@@ -137,10 +156,13 @@ class _$_BoardOptionState implements _BoardOptionState {
 abstract class _BoardOptionState implements BoardOptionState {
   const factory _BoardOptionState(
       {@required int currentOptionIndex,
+      @required bool isLoading,
       @required List<BoardOption> options}) = _$_BoardOptionState;
 
   @override
   int get currentOptionIndex;
+  @override
+  bool get isLoading;
   @override
   List<BoardOption> get options;
   @override

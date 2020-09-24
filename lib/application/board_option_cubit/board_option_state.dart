@@ -4,9 +4,10 @@ part of 'board_option_cubit.dart';
 abstract class BoardOptionState with _$BoardOptionState {
   const factory BoardOptionState(
       {@required int currentOptionIndex,
+      @required bool isLoading,
       @required List<BoardOption> options}) = _BoardOptionState;
   factory BoardOptionState.initial() {
-    return BoardOptionState(currentOptionIndex: 0, options: [
+    return BoardOptionState(isLoading: true, currentOptionIndex: 0, options: [
       BoardOption(title: "Tiny", size: BoardSize(3)),
       BoardOption(title: "Classic", size: BoardSize(4)),
       BoardOption(title: "Big", size: BoardSize(5)),
