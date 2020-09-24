@@ -75,7 +75,10 @@ class PlayScreen extends StatelessWidget {
             builder: (_, state) {
               return Stack(
                 children: [
-                  BoardViewer(),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: BoardViewer(),
+                  ),
                   if (state.isGameOver)
                     Positioned.fill(
                       child: Container(
