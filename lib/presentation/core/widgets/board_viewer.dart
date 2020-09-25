@@ -6,6 +6,7 @@ import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 import 'package:twozerofoureight/domain/theme_color/models/theme_color.dart';
+import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/animated_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/colored_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/merge_only_block_tile.dart';
@@ -23,6 +24,7 @@ class _BoardViewerState extends State<BoardViewer>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _pulseAnimation;
+  bool alreadyShowWinPopup = false;
 
   @override
   void initState() {
@@ -76,6 +78,9 @@ class _BoardViewerState extends State<BoardViewer>
                                   tileSize,
                                   padding,
                                   themeState.currentThemeColor),
+                              if (state.mainBoard.highestPoint.value == 2048 &&
+                                  !alreadyShowWinPopup)
+                                buildWinPopup(context)
                             ],
                           ),
                         );
@@ -89,6 +94,55 @@ class _BoardViewerState extends State<BoardViewer>
         );
       },
     );
+  }
+
+  Widget buildWinPopup(BuildContext context) {
+    final style = TextStyle(fontSize: 35);
+    return Positioned.fill(
+        child: Container(
+      decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.4),
+          borderRadius: BorderRadius.circular(6)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                MyIcons.rating,
+                color: Colors.amber,
+                size: 40,
+              ),
+              Icon(
+                MyIcons.rating,
+                color: Colors.amber,
+                size: 40,
+              ),
+              Icon(
+                MyIcons.rating,
+                color: Colors.amber,
+                size: 40,
+              ),
+            ],
+          ),
+          Text(
+            'You Win',
+            style: style,
+          ),
+          FlatButton(
+            child: Text("Continue"),
+            onPressed: () => _onWinContinue(),
+          )
+        ],
+      ),
+    ));
+  }
+
+  void _onWinContinue() {
+    setState(() {
+      alreadyShowWinPopup = true;
+    });
   }
 
   Stack buildMergeOnlyBlockTileStack(
