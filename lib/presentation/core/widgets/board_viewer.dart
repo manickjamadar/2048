@@ -9,6 +9,7 @@ import 'package:twozerofoureight/domain/theme_color/models/theme_color.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/animated_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/colored_block_tile.dart';
+import 'package:twozerofoureight/presentation/core/widgets/custom_button.dart';
 import 'package:twozerofoureight/presentation/core/widgets/merge_only_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/positioned_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/swipe_detector.dart';
@@ -145,8 +146,11 @@ class _BoardViewerState extends State<BoardViewer>
             'You Win',
             style: style,
           ),
-          FlatButton(
-            child: Text("Continue"),
+          CustomButton(
+            child: Text(
+              "Continue Play",
+              style: TextStyle(fontSize: 18),
+            ),
             onPressed: () => _onWinContinue(),
           )
         ],

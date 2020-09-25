@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
+import 'package:twozerofoureight/presentation/core/widgets/custom_button.dart';
 import 'package:twozerofoureight/presentation/core/widgets/fade_route.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
@@ -66,11 +67,18 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildPlayButton(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return BlocBuilder<BoardOptionCubit, BoardOptionState>(
       builder: (_, state) {
-        return RaisedButton(
-          child: Text("Play"),
-          onPressed: () => _onPlay(context, state),
+        return Container(
+          width: screenWidth * 0.6,
+          child: CustomButton(
+            child: Text(
+              "Play",
+              style: TextStyle(fontSize: 20),
+            ),
+            onPressed: () => _onPlay(context, state),
+          ),
         );
       },
     );
