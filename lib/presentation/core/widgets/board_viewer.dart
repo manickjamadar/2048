@@ -66,7 +66,7 @@ class _BoardViewerState extends State<BoardViewer>
                     return BlocBuilder<ThemeColorCubit, ThemeColorState>(
                       builder: (_, themeState) {
                         return Container(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withOpacity(0.1),
                           padding: EdgeInsets.all(padding),
                           child: Stack(
                             children: [
