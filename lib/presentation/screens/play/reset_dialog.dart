@@ -5,6 +5,7 @@ class ResetDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.black.withOpacity(0),
+      elevation: 0,
       title: Text(
         "Are you sure?",
         textAlign: TextAlign.center,
