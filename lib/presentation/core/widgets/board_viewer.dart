@@ -16,7 +16,7 @@ import 'package:twozerofoureight/presentation/core/widgets/swipe_detector.dart';
 import 'package:twozerofoureight/presentation/core/widgets/tile.dart';
 
 class BoardViewer extends StatefulWidget {
-  static Duration slideDuration = Duration(milliseconds: 150);
+  static Duration slideDuration = Duration(milliseconds: 100);
   static Duration mergeDuration = Duration(milliseconds: 150);
   @override
   _BoardViewerState createState() => _BoardViewerState();
