@@ -11,6 +11,7 @@ import 'package:twozerofoureight/presentation/core/widgets/animated_block_tile.d
 import 'package:twozerofoureight/presentation/core/widgets/colored_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/merge_only_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/positioned_tile.dart';
+import 'package:twozerofoureight/presentation/core/widgets/swipe_detector.dart';
 import 'package:twozerofoureight/presentation/core/widgets/tile.dart';
 
 class BoardViewer extends StatefulWidget {
@@ -43,9 +44,11 @@ class _BoardViewerState extends State<BoardViewer>
   Widget build(BuildContext context) {
     return BlocBuilder<PuzzleCubit, PuzzleState>(
       builder: (_, state) {
-        return GestureDetector(
-          onVerticalDragEnd: (details) => _onVerticalDrag(details, state),
-          onHorizontalDragEnd: (details) => _onHorizontalDrag(details, state),
+        return SwipeDetector(
+          onSwipeDown: () => _onSwipe(state, BoardDirection.down()),
+          onSwipeLeft: () => _onSwipe(state, BoardDirection.left()),
+          onSwipeRight: () => _onSwipe(state, BoardDirection.right()),
+          onSwipeUp: () => _onSwipe(state, BoardDirection.up()),
           child: Center(
             child: AspectRatio(
               aspectRatio: 1,
@@ -207,26 +210,6 @@ class _BoardViewerState extends State<BoardViewer>
                 ),
               )),
     );
-  }
-
-  void _onVerticalDrag(DragEndDetails details, PuzzleState state) {
-    BoardDirection direction;
-    if (details.primaryVelocity < 0) {
-      direction = BoardDirection.up();
-    } else if (details.primaryVelocity > 0) {
-      direction = BoardDirection.down();
-    }
-    _onSwipe(state, direction);
-  }
-
-  void _onHorizontalDrag(DragEndDetails details, PuzzleState state) {
-    BoardDirection direction;
-    if (details.primaryVelocity < 0) {
-      direction = BoardDirection.left();
-    } else if (details.primaryVelocity > 0) {
-      direction = BoardDirection.right();
-    }
-    _onSwipe(state, direction);
   }
 
   void _onSwipe(PuzzleState state, BoardDirection direction) {
