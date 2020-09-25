@@ -13,6 +13,7 @@ class ThemeColorPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.black.withOpacity(0),
+      elevation: 0,
       title: Text(
         "Pick Theme",
         // style: TextStyle(color: Colors.white),
