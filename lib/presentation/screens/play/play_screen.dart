@@ -21,17 +21,18 @@ class PlayScreen extends StatelessWidget {
         body: ThemeBackgroundView(
       child: SafeArea(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(MyIcons.logo, size: 50),
+            Expanded(child: Icon(MyIcons.logo, size: 50)),
             Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 20, top: 10, bottom: 30),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  BlocBuilder<HighScoreManagerCubit, HighScoreManagerState>(
+                  BlocBuilder<PuzzleCubit, PuzzleState>(
                     builder: (_, state) => ScoreBoard(
-                      title: "High Score",
+                      title: "Score",
                       score: state.score,
                     ),
                   ),
@@ -39,9 +40,9 @@ class PlayScreen extends StatelessWidget {
                     icon: Icon(MyIcons.home),
                     onPressed: () => _goHome(context),
                   ),
-                  BlocBuilder<PuzzleCubit, PuzzleState>(
+                  BlocBuilder<HighScoreManagerCubit, HighScoreManagerState>(
                     builder: (_, state) => ScoreBoard(
-                      title: "Score",
+                      title: "High Score",
                       score: state.score,
                     ),
                   ),
@@ -88,7 +89,7 @@ class PlayScreen extends StatelessWidget {
                   child: BoardViewer(),
                 );
               },
-            )
+            ),
           ],
         ),
       ),
