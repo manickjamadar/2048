@@ -31,6 +31,15 @@ abstract class Board implements _$Board {
             (index) => Block.empty(index: index, boardSize: size.value)
                 .copyWith(point: points[index])));
   }
+  BlockPoint get highestPoint {
+    BlockPoint resultPoint = BlockPoint.empty;
+    blocks.forEach((block) {
+      if (block.point.value > resultPoint.value) {
+        resultPoint = block.point;
+      }
+    });
+    return resultPoint;
+  }
 
   bool get isValid => isBoardForm(blocks);
 
