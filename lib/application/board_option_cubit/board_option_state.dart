@@ -7,7 +7,7 @@ abstract class BoardOptionState with _$BoardOptionState {
       @required bool isLoading,
       @required List<BoardOption> options}) = _BoardOptionState;
   factory BoardOptionState.initial() {
-    return BoardOptionState(isLoading: true, currentOptionIndex: 0, options: [
+    return BoardOptionState(isLoading: true, currentOptionIndex: 1, options: [
       BoardOption(title: "Tiny", size: BoardSize(3)),
       BoardOption(title: "Classic", size: BoardSize(4)),
       BoardOption(title: "Big", size: BoardSize(5)),
