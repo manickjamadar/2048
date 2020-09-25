@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
+import 'package:twozerofoureight/presentation/core/widgets/fade_route.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/theme_color_picker.dart';
@@ -35,9 +36,7 @@ class HomeScreen extends StatelessWidget {
                   icon: Icon(MyIcons.about),
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => AboutScreen.generateRoute()));
+                        context, FadeRoute(page: AboutScreen.generateRoute()));
                   },
                 ),
                 IconButton(
@@ -102,8 +101,8 @@ class HomeScreen extends StatelessWidget {
     final currentOption = state.options[state.currentOptionIndex];
     Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (_) => PlayScreen.generateRoute(
+        FadeRoute(
+            page: PlayScreen.generateRoute(
                 puzzleCubit: PuzzleCubit(
                     highScoreManagerCubit:
                         BlocProvider.of<HighScoreManagerCubit>(context))
