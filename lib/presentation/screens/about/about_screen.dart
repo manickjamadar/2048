@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twozerofoureight/helpers/get_app_version.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
+import 'package:twozerofoureight/presentation/core/widgets/custom_icon.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 
 class AboutScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class AboutScreen extends StatelessWidget {
             padding: const EdgeInsets.all(20.0),
             child: Column(
               children: [
-                IconButton(
+                CustomIconButton(
                   icon: Icon(MyIcons.home),
                   onPressed: () {
                     Navigator.pop(context);
