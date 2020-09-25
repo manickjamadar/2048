@@ -30,10 +30,13 @@ class HomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomIconButton(
-                  icon: Icon(MyIcons.colorPallete),
-                  onPressed: () => _onPickTheme(context),
-                  margin: EdgeInsets.all(10),
+                GestureDetector(
+                  onLongPress: () => _onPickTheme(context),
+                  child: CustomIconButton(
+                    icon: Icon(MyIcons.colorPallete),
+                    onPressed: () => _goNextTheme(context),
+                    margin: EdgeInsets.all(10),
+                  ),
                 ),
                 CustomIconButton(
                   icon: Icon(MyIcons.about),
@@ -86,6 +89,10 @@ class HomeScreen extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _goNextTheme(BuildContext context) {
+    BlocProvider.of<ThemeColorCubit>(context).next();
   }
 
   void _onPickTheme(BuildContext context) async {
