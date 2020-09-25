@@ -4,6 +4,7 @@ import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/board_viewer.dart';
 import "package:twozerofoureight/application/high_score_manager/high_score_manager_cubit.dart";
+import 'package:twozerofoureight/presentation/core/widgets/custom_icon.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/play/reset_dialog.dart';
 
@@ -32,7 +33,7 @@ class PlayScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                IconButton(
+                CustomIconButton(
                   icon: Icon(MyIcons.home),
                   onPressed: () => _goHome(context),
                 ),
@@ -46,33 +47,38 @@ class PlayScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    IconButton(
-                      icon: Icon(MyIcons.reset),
-                      onPressed: () => _resetBoard(context),
-                    ),
-                    IconButton(
-                      icon: Icon(MyIcons.music),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Icon(MyIcons.save),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-                BlocBuilder<PuzzleCubit, PuzzleState>(builder: (_, state) {
-                  return IconButton(
-                    icon: Icon(MyIcons.undo),
-                    onPressed: state.previousBoard
-                        .fold(() => null, (a) => () => _undoMove(context)),
-                  );
-                })
-              ],
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CustomIconButton(
+                        icon: Icon(MyIcons.reset),
+                        onPressed: () => _resetBoard(context),
+                        margin: EdgeInsets.only(right: 10),
+                      ),
+                      CustomIconButton(
+                        icon: Icon(MyIcons.music),
+                        onPressed: () {},
+                        margin: EdgeInsets.only(right: 10),
+                      ),
+                      CustomIconButton(
+                        icon: Icon(MyIcons.save),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                  BlocBuilder<PuzzleCubit, PuzzleState>(builder: (_, state) {
+                    return CustomIconButton(
+                      icon: Icon(MyIcons.undo),
+                      onPressed: state.previousBoard
+                          .fold(() => null, (a) => () => _undoMove(context)),
+                    );
+                  })
+                ],
+              ),
             ),
             BlocBuilder<PuzzleCubit, PuzzleState>(
               builder: (_, state) {

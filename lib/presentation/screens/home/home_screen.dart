@@ -4,6 +4,7 @@ import 'package:twozerofoureight/application/board_option_cubit/board_option_cub
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/presentation/core/widgets/custom_button.dart';
+import 'package:twozerofoureight/presentation/core/widgets/custom_icon.dart';
 import 'package:twozerofoureight/presentation/core/widgets/fade_route.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
@@ -29,20 +30,23 @@ class HomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                IconButton(
+                CustomIconButton(
                   icon: Icon(MyIcons.colorPallete),
                   onPressed: () => _onPickTheme(context),
+                  margin: EdgeInsets.all(10),
                 ),
-                IconButton(
+                CustomIconButton(
                   icon: Icon(MyIcons.about),
+                  margin: EdgeInsets.all(10),
                   onPressed: () {
                     Navigator.push(
                         context, FadeRoute(page: AboutScreen.generateRoute()));
                   },
                 ),
-                IconButton(
+                CustomIconButton(
                   icon: Icon(MyIcons.save),
                   onPressed: () {},
+                  margin: EdgeInsets.all(10),
                 )
               ],
             )
