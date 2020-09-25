@@ -5,6 +5,7 @@ import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/board_viewer.dart';
 import "package:twozerofoureight/application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/widgets/custom_icon.dart';
+import 'package:twozerofoureight/presentation/core/widgets/score_board.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/play/reset_dialog.dart';
 
@@ -22,30 +23,30 @@ class PlayScreen extends StatelessWidget {
         child: Column(
           children: [
             Icon(MyIcons.logo, size: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text("High Score"),
-                    BlocBuilder<HighScoreManagerCubit, HighScoreManagerState>(
-                      builder: (_, state) => Text("${state.score.value}"),
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 10, bottom: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  BlocBuilder<HighScoreManagerCubit, HighScoreManagerState>(
+                    builder: (_, state) => ScoreBoard(
+                      title: "High Score",
+                      score: state.score,
                     ),
-                  ],
-                ),
-                CustomIconButton(
-                  icon: Icon(MyIcons.home),
-                  onPressed: () => _goHome(context),
-                ),
-                Column(
-                  children: [
-                    Text("Score"),
-                    BlocBuilder<PuzzleCubit, PuzzleState>(
-                      builder: (_, state) => Text("${state.score.value}"),
+                  ),
+                  CustomIconButton(
+                    icon: Icon(MyIcons.home),
+                    onPressed: () => _goHome(context),
+                  ),
+                  BlocBuilder<PuzzleCubit, PuzzleState>(
+                    builder: (_, state) => ScoreBoard(
+                      title: "Score",
+                      score: state.score,
                     ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20),
