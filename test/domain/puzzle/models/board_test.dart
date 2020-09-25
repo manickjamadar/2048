@@ -273,5 +273,49 @@ void main() {
         });
       });
     });
+    group("highest point test => ", () {
+      test("should return empty point for all empty point", () {
+        final board = Board.fromPoints(points: [
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+        ], size: BoardSize(3));
+        expect(board.highestPoint, equals(BlockPoint.empty));
+      });
+      test("should return point two for only two point", () {
+        final board = Board.fromPoints(points: [
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.two,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.two,
+        ], size: BoardSize(3));
+        expect(board.highestPoint, equals(BlockPoint.two));
+      });
+      test("should return point 16", () {
+        final board = Board.fromPoints(points: [
+          BlockPoint.two,
+          BlockPoint.two.mergedPoint().mergedPoint(),
+          BlockPoint.four,
+          BlockPoint.empty,
+          BlockPoint.two,
+          BlockPoint.four.mergedPoint().mergedPoint(),
+          BlockPoint.empty,
+          BlockPoint.empty,
+          BlockPoint.two,
+        ], size: BoardSize(3));
+        expect(board.highestPoint.value, equals(16));
+      });
+    });
   });
 }
