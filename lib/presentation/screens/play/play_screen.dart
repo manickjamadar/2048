@@ -5,6 +5,7 @@ import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/board_viewer.dart';
 import "package:twozerofoureight/application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
+import 'package:twozerofoureight/presentation/screens/play/reset_dialog.dart';
 
 class PlayScreen extends StatelessWidget {
   static const String routeName = "/play";
@@ -101,8 +102,12 @@ class PlayScreen extends StatelessWidget {
     ));
   }
 
-  void _resetBoard(BuildContext context) {
-    BlocProvider.of<PuzzleCubit>(context).reset();
+  void _resetBoard(BuildContext context) async {
+    final bool shouldReset =
+        await showDialog(context: context, builder: (_) => ResetDialog());
+    if (shouldReset != null && shouldReset == true) {
+      BlocProvider.of<PuzzleCubit>(context).reset();
+    }
   }
 
   void _goHome(BuildContext context) {
