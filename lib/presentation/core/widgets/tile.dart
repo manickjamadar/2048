@@ -21,6 +21,7 @@ class Tile extends StatelessWidget {
     final actualSize = size - (padding * 2);
     final fontSize = actualSize * 0.35;
     final tinyColor = TinyColor(color);
+    final isLight = tinyColor.getBrightness() > 166;
     return Container(
       padding: EdgeInsets.all(padding),
       child: ClipRRect(
@@ -37,7 +38,7 @@ class Tile extends StatelessWidget {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
-                  color: tinyColor.isLight() ? Colors.black : Colors.white),
+                  color: isLight ? Colors.black : Colors.white),
             ),
           ),
         ),
