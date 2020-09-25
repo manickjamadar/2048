@@ -41,7 +41,6 @@ class ColoredBlockTile extends StatelessWidget {
       final totalStep = 5;
       final maxValue = 60;
       final brightnessValue = (maxValue / totalStep) * stepValue;
-      print(brightnessValue);
       tinyColor = tinyColor.brighten(maxValue - brightnessValue.toInt());
     } else {
       tinyColor = TinyColor(themeColor.second);

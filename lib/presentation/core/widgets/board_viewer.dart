@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
+import 'package:twozerofoureight/domain/theme_color/models/theme_color.dart';
 import 'package:twozerofoureight/presentation/core/widgets/animated_block_tile.dart';
+import 'package:twozerofoureight/presentation/core/widgets/colored_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/merge_only_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/positioned_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/tile.dart';
@@ -54,19 +57,29 @@ class _BoardViewerState extends State<BoardViewer>
                     final padding = approxTileSize * 0.035;
                     final actualParentWidth = parentWidth - (padding * 2);
                     final tileSize = actualParentWidth / boardSize;
-                    return Container(
-                      color: Colors.black.withOpacity(0.2),
-                      padding: EdgeInsets.all(padding),
-                      child: Stack(
-                        children: [
-                          buildBackgroundTilStack(
-                              state.boardSize, tileSize, padding),
-                          buildAnimatedBlockTileStack(
-                              state.mainBoard, tileSize, padding),
-                          buildMergeOnlyBlockTileStack(
-                              state.mergeOnlyBoard, tileSize, padding),
-                        ],
-                      ),
+                    return BlocBuilder<ThemeColorCubit, ThemeColorState>(
+                      builder: (_, themeState) {
+                        return Container(
+                          color: Colors.black.withOpacity(0.2),
+                          padding: EdgeInsets.all(padding),
+                          child: Stack(
+                            children: [
+                              buildBackgroundTilStack(
+                                  state.boardSize, tileSize, padding),
+                              buildAnimatedBlockTileStack(
+                                  state.mainBoard,
+                                  tileSize,
+                                  padding,
+                                  themeState.currentThemeColor),
+                              buildMergeOnlyBlockTileStack(
+                                  state.mergeOnlyBoard,
+                                  tileSize,
+                                  padding,
+                                  themeState.currentThemeColor),
+                            ],
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
@@ -79,34 +92,35 @@ class _BoardViewerState extends State<BoardViewer>
   }
 
   Stack buildMergeOnlyBlockTileStack(
-      Board board, double tileSize, double tilePadding) {
+      Board board, double tileSize, double tilePadding, ThemeColor themeColor) {
     return Stack(
         children: board.blocks
             .map((block) => MergeOnlyBlockTile(
                   block: block,
                   pulse: _pulseAnimation,
-                  tile: Tile(
-                    color: Colors.white,
+                  tile: ColoredBlockTile(
+                    themeColor: themeColor,
+                    block: block,
                     padding: tilePadding,
                     size: tileSize,
-                    value: block.point.value.toString(),
-                  ),
+                  ).build(context),
                 ))
             .toList());
   }
 
   Stack buildAnimatedBlockTileStack(
-      Board board, double tileSize, double tilePadding) {
+      Board board, double tileSize, double tilePadding, ThemeColor themeColor) {
     return Stack(
         children: board.blocks
             .map((block) => AnimatedBlockTile(
                   block: block,
                   duration: BoardViewer.slideDuration,
-                  tile: Tile(
-                      value: block.point.value.toString(),
-                      size: tileSize,
-                      color: Colors.white,
-                      padding: tilePadding),
+                  tile: ColoredBlockTile(
+                    themeColor: themeColor,
+                    block: block,
+                    padding: tilePadding,
+                    size: tileSize,
+                  ).build(context),
                 ))
             .toList());
   }
