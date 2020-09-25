@@ -76,23 +76,9 @@ class PlayScreen extends StatelessWidget {
             ),
             BlocBuilder<PuzzleCubit, PuzzleState>(
               builder: (_, state) {
-                return Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: BoardViewer(),
-                    ),
-                    if (state.isGameOver)
-                      Positioned.fill(
-                        child: Container(
-                          color: Colors.black.withOpacity(0.4),
-                          child: Center(
-                              child: Text("Game Over",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 40))),
-                        ),
-                      )
-                  ],
+                return Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: BoardViewer(),
                 );
               },
             )

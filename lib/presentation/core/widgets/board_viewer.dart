@@ -80,7 +80,8 @@ class _BoardViewerState extends State<BoardViewer>
                                   themeState.currentThemeColor),
                               if (state.mainBoard.highestPoint.value == 2048 &&
                                   !alreadyShowWinPopup)
-                                buildWinPopup(context)
+                                buildWinPopup(context),
+                              if (state.isGameOver) buildGameOverPopup(context)
                             ],
                           ),
                         );
@@ -94,6 +95,17 @@ class _BoardViewerState extends State<BoardViewer>
         );
       },
     );
+  }
+
+  Widget buildGameOverPopup(BuildContext context) {
+    return Positioned.fill(
+        child: Container(
+            decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(6)),
+            child: Center(
+              child: Text("Game Over", style: TextStyle(fontSize: 40)),
+            )));
   }
 
   Widget buildWinPopup(BuildContext context) {
