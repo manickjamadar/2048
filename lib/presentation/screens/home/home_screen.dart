@@ -43,11 +43,7 @@ class HomeScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(MyIcons.save),
                   onPressed: () {},
-                ),
-                IconButton(
-                  icon: Icon(MyIcons.share),
-                  onPressed: () {},
-                ),
+                )
               ],
             )
           ],
