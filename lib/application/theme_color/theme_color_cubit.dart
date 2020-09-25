@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:twozerofoureight/domain/theme_color/models/theme_color.dart';
 import 'package:twozerofoureight/infrastructure/theme_color/facade/theme_color_facade.dart';
-
+import 'package:twozerofoureight/helpers/list_extensions.dart';
 part 'theme_color_state.dart';
 part 'theme_color_cubit.freezed.dart';
 
@@ -29,5 +29,13 @@ class ThemeColorCubit extends Cubit<ThemeColorState> {
 
     emit(state.copyWith(currentIndex: index));
     themeColorFacade.saveIndex(index);
+  }
+
+  void next() {
+    if (state.themeColors.hasNext(state.currentIndex)) {
+      change(state.currentIndex + 1);
+    } else {
+      change(0);
+    }
   }
 }
