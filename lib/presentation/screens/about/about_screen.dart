@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twozerofoureight/helpers/get_app_version.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 
@@ -32,9 +33,19 @@ class AboutScreen extends StatelessWidget {
                   gameInstruction,
                   style: TextStyle(fontSize: 22, height: 1.5),
                 ))),
-                Text("Version 1.0.0",
-                    style:
-                        TextStyle(fontSize: 12, fontStyle: FontStyle.italic)),
+                FutureBuilder<String>(
+                  future: getAppVersion(),
+                  builder: (_, snapshot) {
+                    String version = "";
+                    if (snapshot.hasData) {
+                      version = "Version ${snapshot.data}";
+                    }
+
+                    return Text(version,
+                        style: TextStyle(
+                            fontSize: 12, fontStyle: FontStyle.italic));
+                  },
+                ),
                 Text(
                   "Created by Creanick",
                   style: TextStyle(fontWeight: FontWeight.w600),
