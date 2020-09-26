@@ -172,11 +172,13 @@ class PuzzleCubit extends Cubit<PuzzleState> {
         score: _previousScore,
         previousBoard: None(),
       ));
+      _save();
     });
   }
 
   void reset() {
     init(state.boardSize);
+    _save();
   }
 
   @override
