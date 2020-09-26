@@ -2,7 +2,13 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/application/saved_board/saved_board_cubit.dart';
+import 'package:twozerofoureight/domain/board_option/models/board_option.dart';
+import 'package:twozerofoureight/domain/core/value_objects/unique_id.dart';
+import 'package:twozerofoureight/domain/puzzle/models/puzzle/puzzle.dart';
+import 'package:twozerofoureight/domain/saved_board/models/saved_board.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/board_viewer.dart';
 import "package:twozerofoureight/application/high_score_manager/high_score_manager_cubit.dart";
@@ -116,6 +122,17 @@ class PlayScreen extends StatelessWidget {
 
   void _onSaveBoard(BuildContext context) {
     EasyDebounce.debounce("save_board", Duration(milliseconds: 500), () {
+      final puzzleState = BlocProvider.of<PuzzleCubit>(context).state;
+      final savedBoard = SavedBoard(
+          id: UniqueId(),
+          option:
+              BlocProvider.of<BoardOptionCubit>(context).state.currentOption,
+          puzzle: Puzzle(
+              board: puzzleState.mainBoard,
+              isGameOver: puzzleState.isGameOver,
+              previousBoard: puzzleState.previousBoard,
+              score: puzzleState.score));
+      BlocProvider.of<SavedBoardCubit>(context).save(savedBoard);
       Fluttertoast.showToast(
         msg: "Board Saved Successfully",
         backgroundColor: Colors.black.withOpacity(0.4),
