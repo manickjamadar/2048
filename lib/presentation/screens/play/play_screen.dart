@@ -1,5 +1,7 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/board_viewer.dart';
@@ -68,7 +70,7 @@ class PlayScreen extends StatelessWidget {
                       ),
                       CustomIconButton(
                         icon: Icon(MyIcons.save),
-                        onPressed: () {},
+                        onPressed: () => _onSaveBoard(context),
                       ),
                     ],
                   ),
@@ -110,5 +112,14 @@ class PlayScreen extends StatelessWidget {
 
   void _undoMove(BuildContext context) {
     BlocProvider.of<PuzzleCubit>(context).undo();
+  }
+
+  void _onSaveBoard(BuildContext context) {
+    EasyDebounce.debounce("save_board", Duration(milliseconds: 500), () {
+      Fluttertoast.showToast(
+        msg: "Board Saved Successfully",
+        backgroundColor: Colors.black.withOpacity(0.4),
+      );
+    });
   }
 }
