@@ -91,7 +91,8 @@ class PuzzleCubit extends Cubit<PuzzleState> {
         mergeOnlyBoard: mergeOnlyBoard));
   }
 
-  void initWithBoard(Board board, BoardScore score, {Board previousBoard}) {
+  void initWithBoard(Board board, BoardScore score,
+      {Option<Board> previousBoard}) {
     if (!board.isValid) {
       throw UnsupportedError("Board size is invalid");
     }
@@ -102,7 +103,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
                 GenerateRandomBoardActor(board, count: board.isEmpty ? 2 : 0))
             .run(),
         mergeOnlyBoard: mergeOnlyBoard,
-        previousBoard: optionOf(previousBoard),
+        previousBoard: previousBoard,
         slidable: true,
         score: score,
         isGameOver: _getGameOverStatus(board)));
