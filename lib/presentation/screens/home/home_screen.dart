@@ -84,7 +84,7 @@ class HomeScreen extends StatelessWidget {
               "Play",
               style: TextStyle(fontSize: 20),
             ),
-            onPressed: () => _onPlay(context, state),
+            onPressed: () => _onPlay(context),
           ),
         );
       },
@@ -116,15 +116,11 @@ class HomeScreen extends StatelessWidget {
     BlocProvider.of<BoardOptionCubit>(context).change(index);
   }
 
-  void _onPlay(BuildContext context, BoardOptionState state) {
-    final currentOption = state.options[state.currentOptionIndex];
+  void _onPlay(BuildContext context) {
     Navigator.push(
         context,
         FadeRoute(
             page: PlayScreen.generateRoute(
-                puzzleCubit: PuzzleCubit(
-                    highScoreManagerCubit:
-                        BlocProvider.of<HighScoreManagerCubit>(context))
-                  ..init(currentOption.size))));
+                puzzleCubit: BlocProvider.of<PuzzleCubit>(context))));
   }
 }

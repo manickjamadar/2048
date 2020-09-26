@@ -12,7 +12,7 @@ import 'package:twozerofoureight/presentation/screens/play/reset_dialog.dart';
 class PlayScreen extends StatelessWidget {
   static const String routeName = "/play";
   static Widget generateRoute({@required PuzzleCubit puzzleCubit}) {
-    return BlocProvider(create: (_) => puzzleCubit, child: PlayScreen());
+    return BlocProvider.value(value: puzzleCubit, child: PlayScreen());
   }
 
   @override
