@@ -7,12 +7,14 @@ import 'package:twozerofoureight/domain/board_option/facade/board_option_facade.
 import 'package:twozerofoureight/domain/high_score_manager/facade/high_score_manager_facade.dart';
 import 'package:twozerofoureight/domain/puzzle/data_source/puzzle_data_source.dart';
 import 'package:twozerofoureight/domain/puzzle/facade/puzzle_facade.dart';
+import 'package:twozerofoureight/domain/saved_board/data_source/saved_board_data_source.dart';
 import 'package:twozerofoureight/domain/saved_board/facade/saved_board_facade.dart';
 import 'package:twozerofoureight/domain/theme_color/facade/theme_color_facade.dart';
 import 'package:twozerofoureight/infrastructure/board_option/facade/board_option_facade.dart';
 import 'package:twozerofoureight/infrastructure/high_score_manager/facade/high_score_manager_facade.dart';
 import 'package:twozerofoureight/infrastructure/puzzle/data_source/puzzle_data_source.dart';
 import 'package:twozerofoureight/infrastructure/puzzle/facade/puzzle_facade.dart';
+import 'package:twozerofoureight/infrastructure/saved_board/data_source/saved_board_data_source.dart';
 import 'package:twozerofoureight/infrastructure/saved_board/facade/saved_board_facade.dart';
 import 'package:twozerofoureight/infrastructure/theme_color/facade/theme_color_facade.dart';
 
@@ -44,11 +46,15 @@ Future<void> initFacade() async {
       () => ThemeColorFacade(themeColorBox));
   locator.registerLazySingleton<IPuzzleFacade>(
       () => RealPuzzleFacade(dataSource: locator<IPuzzleDataSource>()));
-  locator.registerLazySingleton<ISavedBoardFacade>(() => SavedBoardFacade());
+  locator.registerLazySingleton<ISavedBoardFacade>(
+      () => SavedBoardFacade(dataSource: locator<ISavedBoardDataSource>()));
 }
 
 Future<void> initDataSource() async {
   final puzzleBox = await Hive.openBox<String>("puzzle");
+  final savedBoardBox = await Hive.openBox<String>("saved_board");
   locator.registerLazySingleton<IPuzzleDataSource>(
       () => PuzzleDataSource(puzzleBox));
+  locator.registerLazySingleton<ISavedBoardDataSource>(
+      () => SavedBoardDataSource(savedBoardBox));
 }
