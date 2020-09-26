@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
@@ -56,10 +58,12 @@ class SavedBoardScreen extends StatelessWidget {
                             "Highest Point: ${board.puzzle.board.highestPoint.value} - Score: ${board.puzzle.score.value}",
                             style:
                                 TextStyle(fontSize: 13, color: Colors.white)),
-                        trailing: IconButton(
-                          icon: Icon(MyIcons.delete),
-                          onPressed: () => _onDelete(context, board),
-                        ),
+                        trailing: Builder(builder: (context) {
+                          return IconButton(
+                            icon: Icon(MyIcons.delete),
+                            onPressed: () => _onDelete(context, board),
+                          );
+                        }),
                       );
                     },
                     itemCount: boards.length,
@@ -72,8 +76,30 @@ class SavedBoardScreen extends StatelessWidget {
     );
   }
 
-  void _onDelete(BuildContext context, SavedBoard savedBoard) {
-    BlocProvider.of<SavedBoardCubit>(context).delete(savedBoard.id);
+  void _onDelete(BuildContext context, SavedBoard savedBoard) async {
+    final cubit = BlocProvider.of<SavedBoardCubit>(context);
+    final deleteCompleter = Completer<bool>();
+    final snackBarDuration = Duration(seconds: 3);
+    cubit.delete(savedBoard.id, deleteCompleter.future);
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content:
+          Text("Deleted Successfully", style: TextStyle(color: Colors.white)),
+      backgroundColor: Colors.green,
+      duration: snackBarDuration,
+      action: SnackBarAction(
+        label: "Undo",
+        textColor: Colors.white,
+        onPressed: () {
+          deleteCompleter.complete(false);
+          cubit.undo();
+        },
+      ),
+    ));
+    await Future.delayed(snackBarDuration, () {
+      if (!deleteCompleter.isCompleted) {
+        deleteCompleter.complete(true);
+      }
+    });
   }
 
   void _onPlay(BuildContext context, SavedBoard savedBoard) {
