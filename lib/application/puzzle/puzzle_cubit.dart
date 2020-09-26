@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
+import 'package:twozerofoureight/domain/board_option/models/board_option.dart';
 import 'package:twozerofoureight/domain/core/logic/action_runner/action_runner.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/has_any_empty_blocks.dart';
 import 'package:twozerofoureight/domain/core/logic/board_actors/generate_random_board_actor.dart';
@@ -10,7 +14,9 @@ import 'package:twozerofoureight/domain/core/logic/board_actors/merge_actor.dart
 import 'package:twozerofoureight/domain/core/logic/board_actors/merge_only_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/board_actors/slide_actor.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
+import 'package:twozerofoureight/domain/puzzle/facade/puzzle_facade.dart';
 import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
+import 'package:twozerofoureight/domain/puzzle/models/puzzle/puzzle.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_score.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 import '../high_score_manager/high_score_manager_cubit.dart';
@@ -18,9 +24,20 @@ part 'puzzle_state.dart';
 part 'puzzle_cubit.freezed.dart';
 
 class PuzzleCubit extends Cubit<PuzzleState> {
+  final BoardOptionCubit boardOptionCubit;
   final HighScoreManagerCubit highScoreManagerCubit;
-  PuzzleCubit({@required this.highScoreManagerCubit})
-      : super(PuzzleState.initial());
+  final IPuzzleFacade puzzleFacade;
+  StreamSubscription<BoardOptionState> boardOptionSub;
+  PuzzleCubit(
+      {@required this.highScoreManagerCubit,
+      @required this.boardOptionCubit,
+      @required this.puzzleFacade})
+      : super(PuzzleState.initial()) {
+    _refreshed(boardOptionCubit.state.currentOption);
+    boardOptionSub = boardOptionCubit.listen((optionState) {
+      _refreshed(optionState.currentOption);
+    });
+  }
 
   bool _getGameOverStatus(Board board) {
     return !hasAnyEmptyBlocks(board.blocks) && !board.slidable;
@@ -29,6 +46,35 @@ class PuzzleCubit extends Cubit<PuzzleState> {
   BoardScore _previousScore = BoardScore(0);
 
   //events
+  void _refreshed(BoardOption option) async {
+    final puzzleOption = await puzzleFacade.get(option);
+    puzzleOption.fold((l) {
+      init(option.size);
+    }, (puzzle) {
+      _initFromModel(puzzle);
+    });
+  }
+
+  void _save() async {
+    final puzzle = Puzzle(
+        board: state.mainBoard,
+        isGameOver: state.isGameOver,
+        previousBoard: state.previousBoard,
+        score: state.score);
+    await puzzleFacade.save(puzzle, boardOptionCubit.state.currentOption);
+  }
+
+  void _initFromModel(Puzzle puzzle) {
+    emit(PuzzleState(
+        boardSize: puzzle.board.size,
+        mainBoard: puzzle.board,
+        mergeOnlyBoard: Board.empty(puzzle.board.size),
+        previousBoard: puzzle.previousBoard,
+        slidable: true,
+        score: puzzle.score,
+        isGameOver: puzzle.isGameOver));
+  }
+
   void init(BoardSize size) {
     final mainBoard = Board.empty(size);
     final mergeOnlyBoard = Board.empty(size);
@@ -113,6 +159,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
     if (currentScore.value > highScoreManagerCubit.state.score.value) {
       highScoreManagerCubit.save(currentScore);
     }
+    _save();
   }
 
   void undo() {
@@ -128,5 +175,11 @@ class PuzzleCubit extends Cubit<PuzzleState> {
 
   void reset() {
     init(state.boardSize);
+  }
+
+  @override
+  Future<void> close() {
+    boardOptionSub?.cancel();
+    return super.close();
   }
 }
