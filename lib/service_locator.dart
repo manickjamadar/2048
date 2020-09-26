@@ -4,9 +4,11 @@ import 'package:twozerofoureight/application/board_option_cubit/board_option_cub
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/domain/board_option/facade/board_option_facade.dart';
 import 'package:twozerofoureight/domain/high_score_manager/facade/high_score_manager_facade.dart';
+import 'package:twozerofoureight/domain/puzzle/facade/puzzle_facade.dart';
 import 'package:twozerofoureight/domain/theme_color/facade/theme_color_facade.dart';
 import 'package:twozerofoureight/infrastructure/board_option/facade/board_option_facade.dart';
 import 'package:twozerofoureight/infrastructure/high_score_manager/facade/high_score_manager_facade.dart';
+import 'package:twozerofoureight/infrastructure/puzzle/facade/puzzle_facade.dart';
 import 'package:twozerofoureight/infrastructure/theme_color/facade/theme_color_facade.dart';
 
 final locator = GetIt.I;
@@ -32,4 +34,5 @@ Future<void> initFacade() async {
       () => BoardOptionFacade(boardOptionBox));
   locator.registerLazySingleton<IThemeColorFacade>(
       () => ThemeColorFacade(themeColorBox));
+  locator.registerLazySingleton<IPuzzleFacade>(() => FakePuzzleFacade());
 }
