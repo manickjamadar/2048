@@ -40,14 +40,6 @@ class PuzzleCubit extends Cubit<PuzzleState> {
 
   BoardScore _previousScore = BoardScore(0);
 
-  //events
-  void autoInit() {
-    _refreshed(boardOptionCubit.state.currentOption);
-    boardOptionSub = boardOptionCubit.listen((optionState) {
-      _refreshed(optionState.currentOption);
-    });
-  }
-
   void _refreshed(BoardOption option) async {
     final puzzleOption = await puzzleFacade.get(option);
     puzzleOption.fold((l) {
@@ -75,6 +67,14 @@ class PuzzleCubit extends Cubit<PuzzleState> {
         slidable: true,
         score: puzzle.score,
         isGameOver: puzzle.isGameOver));
+  }
+
+  //events
+  void autoInit() {
+    _refreshed(boardOptionCubit.state.currentOption);
+    boardOptionSub = boardOptionCubit.listen((optionState) {
+      _refreshed(optionState.currentOption);
+    });
   }
 
   void init(BoardSize size) {
