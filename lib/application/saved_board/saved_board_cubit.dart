@@ -27,7 +27,7 @@ class SavedBoardCubit extends Cubit<SavedBoardState> {
     state.maybeWhen(
         orElse: () {},
         loaded: (list) {
-          final newList = [savedBoard, ...list];
+          final newList = [...list, savedBoard];
           emit(SavedBoardState.loaded(savedBoards: newList));
           savedBoardFacade.create(savedBoard);
         });
