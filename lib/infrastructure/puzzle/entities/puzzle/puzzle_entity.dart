@@ -2,17 +2,19 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:twozerofoureight/domain/puzzle/models/puzzle/puzzle.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_score.dart';
-import 'package:twozerofoureight/infrastructure/puzzle/entities/board_entity.dart';
+import 'package:twozerofoureight/infrastructure/puzzle/entities/board/board_entity.dart';
 part 'puzzle_entity.freezed.dart';
+part 'puzzle_entity.g.dart';
 
 @freezed
 abstract class PuzzleEntity implements _$PuzzleEntity {
   const PuzzleEntity._();
+  @JsonSerializable(explicitToJson: true)
   const factory PuzzleEntity({
     @required int score,
     @required bool isGameOver,
-    @required BoardEntity boardEntity,
-    BoardEntity previousBoardEntity,
+    @JsonKey(name: "board_entity") @required BoardEntity boardEntity,
+    @JsonKey(name: "previous_board_entity") BoardEntity previousBoardEntity,
   }) = _PuzzleEntity;
 
   factory PuzzleEntity.fromModel(Puzzle puzzle) {
@@ -30,4 +32,7 @@ abstract class PuzzleEntity implements _$PuzzleEntity {
         board: boardEntity.toModel(),
         previousBoard: optionOf(previousBoardEntity?.toModel()));
   }
+
+  factory PuzzleEntity.fromJson(Map<String, dynamic> json) =>
+      _$PuzzleEntityFromJson(json);
 }

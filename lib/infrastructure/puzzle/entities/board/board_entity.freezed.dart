@@ -8,6 +8,9 @@ part of 'board_entity.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+BoardEntity _$BoardEntityFromJson(Map<String, dynamic> json) {
+  return _BoardEntity.fromJson(json);
+}
 
 class _$BoardEntityTearOff {
   const _$BoardEntityTearOff();
@@ -28,6 +31,7 @@ mixin _$BoardEntity {
   List<int> get points;
   int get size;
 
+  Map<String, dynamic> toJson();
   $BoardEntityCopyWith<BoardEntity> get copyWith;
 }
 
@@ -87,11 +91,15 @@ class __$BoardEntityCopyWithImpl<$Res> extends _$BoardEntityCopyWithImpl<$Res>
   }
 }
 
+@JsonSerializable()
 class _$_BoardEntity extends _BoardEntity {
   const _$_BoardEntity({@required this.points, @required this.size})
       : assert(points != null),
         assert(size != null),
         super._();
+
+  factory _$_BoardEntity.fromJson(Map<String, dynamic> json) =>
+      _$_$_BoardEntityFromJson(json);
 
   @override
   final List<int> points;
@@ -122,12 +130,20 @@ class _$_BoardEntity extends _BoardEntity {
   @override
   _$BoardEntityCopyWith<_BoardEntity> get copyWith =>
       __$BoardEntityCopyWithImpl<_BoardEntity>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_BoardEntityToJson(this);
+  }
 }
 
 abstract class _BoardEntity extends BoardEntity {
   const _BoardEntity._() : super._();
   const factory _BoardEntity({@required List<int> points, @required int size}) =
       _$_BoardEntity;
+
+  factory _BoardEntity.fromJson(Map<String, dynamic> json) =
+      _$_BoardEntity.fromJson;
 
   @override
   List<int> get points;

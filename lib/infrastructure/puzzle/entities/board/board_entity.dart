@@ -3,6 +3,7 @@ import 'package:twozerofoureight/domain/puzzle/models/board/board.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/block_point.dart';
 import 'package:twozerofoureight/domain/puzzle/value_objects/board_size.dart';
 part 'board_entity.freezed.dart';
+part 'board_entity.g.dart';
 
 @freezed
 abstract class BoardEntity implements _$BoardEntity {
@@ -20,4 +21,7 @@ abstract class BoardEntity implements _$BoardEntity {
         points: points.map((point) => BlockPoint(point)).toList(),
         size: BoardSize(size));
   }
+
+  factory BoardEntity.fromJson(Map<String, dynamic> json) =>
+      _$BoardEntityFromJson(json);
 }
