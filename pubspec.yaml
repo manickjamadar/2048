@@ -38,6 +38,8 @@ dependencies:
   tinycolor: null
   package_info: ^0.4.3
   json_annotation: ^3.1.0
+  fluttertoast: ^7.1.1
+  easy_debounce: ^1.0.1
 
 dev_dependencies:
   flutter_test:
