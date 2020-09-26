@@ -9,6 +9,7 @@ import 'package:twozerofoureight/presentation/core/widgets/fade_route.dart';
 import 'package:twozerofoureight/presentation/core/widgets/theme_background_view.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/theme_color_picker.dart';
+import 'package:twozerofoureight/presentation/screens/saved_board/saved_board_screen.dart';
 import "../../../application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/screens/about/about_screen.dart';
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 CustomIconButton(
                   icon: Icon(MyIcons.save),
-                  onPressed: () {},
+                  onPressed: () => _goToSavedBoard(context),
                   margin: EdgeInsets.all(10),
                 )
               ],
@@ -122,5 +123,9 @@ class HomeScreen extends StatelessWidget {
         FadeRoute(
             page: PlayScreen.generateRoute(
                 puzzleCubit: BlocProvider.of<PuzzleCubit>(context))));
+  }
+
+  void _goToSavedBoard(BuildContext context) {
+    Navigator.push(context, FadeRoute(page: SavedBoardScreen.generateRoute()));
   }
 }
