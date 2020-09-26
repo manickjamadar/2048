@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/application/saved_board/saved_board_cubit.dart';
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/presentation/core/widgets/custom_button.dart';
 import 'package:twozerofoureight/presentation/core/widgets/custom_icon.dart';
@@ -126,6 +127,10 @@ class HomeScreen extends StatelessWidget {
   }
 
   void _goToSavedBoard(BuildContext context) {
-    Navigator.push(context, FadeRoute(page: SavedBoardScreen.generateRoute()));
+    Navigator.push(
+        context,
+        FadeRoute(
+            page: SavedBoardScreen.generateRoute(
+                savedBoardCubit: BlocProvider.of<SavedBoardCubit>(context))));
   }
 }
