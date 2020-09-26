@@ -81,6 +81,7 @@ class SavedBoardScreen extends StatelessWidget {
     final deleteCompleter = Completer<bool>();
     final snackBarDuration = Duration(seconds: 3);
     cubit.delete(savedBoard.id, deleteCompleter.future);
+    Scaffold.of(context).removeCurrentSnackBar();
     Scaffold.of(context).showSnackBar(SnackBar(
       content:
           Text("Deleted Successfully", style: TextStyle(color: Colors.white)),
