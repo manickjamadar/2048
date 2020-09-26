@@ -1,16 +1,19 @@
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
+import 'package:twozerofoureight/application/saved_board/saved_board_cubit.dart';
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/domain/board_option/facade/board_option_facade.dart';
 import 'package:twozerofoureight/domain/high_score_manager/facade/high_score_manager_facade.dart';
 import 'package:twozerofoureight/domain/puzzle/data_source/puzzle_data_source.dart';
 import 'package:twozerofoureight/domain/puzzle/facade/puzzle_facade.dart';
+import 'package:twozerofoureight/domain/saved_board/facade/saved_board_facade.dart';
 import 'package:twozerofoureight/domain/theme_color/facade/theme_color_facade.dart';
 import 'package:twozerofoureight/infrastructure/board_option/facade/board_option_facade.dart';
 import 'package:twozerofoureight/infrastructure/high_score_manager/facade/high_score_manager_facade.dart';
 import 'package:twozerofoureight/infrastructure/puzzle/data_source/puzzle_data_source.dart';
 import 'package:twozerofoureight/infrastructure/puzzle/facade/puzzle_facade.dart';
+import 'package:twozerofoureight/infrastructure/saved_board/facade/saved_board_facade.dart';
 import 'package:twozerofoureight/infrastructure/theme_color/facade/theme_color_facade.dart';
 
 final locator = GetIt.I;
@@ -26,6 +29,8 @@ void initBloc() {
       () => BoardOptionCubit(boardOptionFacade: locator<IBoardOptionFacade>()));
   locator.registerFactory<ThemeColorCubit>(
       () => ThemeColorCubit(themeColorFacade: locator<IThemeColorFacade>()));
+  locator.registerFactory<SavedBoardCubit>(
+      () => SavedBoardCubit(savedBoardFacade: locator<ISavedBoardFacade>()));
 }
 
 Future<void> initFacade() async {
@@ -39,6 +44,7 @@ Future<void> initFacade() async {
       () => ThemeColorFacade(themeColorBox));
   locator.registerLazySingleton<IPuzzleFacade>(
       () => RealPuzzleFacade(dataSource: locator<IPuzzleDataSource>()));
+  locator.registerLazySingleton<ISavedBoardFacade>(() => SavedBoardFacade());
 }
 
 Future<void> initDataSource() async {

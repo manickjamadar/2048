@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import "package:hive_flutter/hive_flutter.dart";
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
+import 'package:twozerofoureight/application/saved_board/saved_board_cubit.dart';
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/domain/high_score_manager/facade/high_score_manager_facade.dart';
 import 'package:twozerofoureight/domain/puzzle/facade/puzzle_facade.dart';
@@ -35,7 +36,9 @@ void main() async {
             highScoreManagerCubit:
                 BlocProvider.of<HighScoreManagerCubit>(context))
           ..autoInit(),
-      )
+      ),
+      BlocProvider(
+          lazy: false, create: (_) => locator<SavedBoardCubit>()..init()),
     ],
     child: App(),
   ));
