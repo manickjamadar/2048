@@ -32,12 +32,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
       {@required this.highScoreManagerCubit,
       @required this.boardOptionCubit,
       @required this.puzzleFacade})
-      : super(PuzzleState.initial()) {
-    _refreshed(boardOptionCubit.state.currentOption);
-    boardOptionSub = boardOptionCubit.listen((optionState) {
-      _refreshed(optionState.currentOption);
-    });
-  }
+      : super(PuzzleState.initial());
 
   bool _getGameOverStatus(Board board) {
     return !hasAnyEmptyBlocks(board.blocks) && !board.slidable;
@@ -46,6 +41,13 @@ class PuzzleCubit extends Cubit<PuzzleState> {
   BoardScore _previousScore = BoardScore(0);
 
   //events
+  void autoInit() {
+    _refreshed(boardOptionCubit.state.currentOption);
+    boardOptionSub = boardOptionCubit.listen((optionState) {
+      _refreshed(optionState.currentOption);
+    });
+  }
+
   void _refreshed(BoardOption option) async {
     final puzzleOption = await puzzleFacade.get(option);
     puzzleOption.fold((l) {
