@@ -89,6 +89,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
         mainBoard:
             ActionRunner(GenerateRandomBoardActor(mainBoard, count: 2)).run(),
         mergeOnlyBoard: mergeOnlyBoard));
+    _save();
   }
 
   void initWithBoard(Board board, BoardScore score,
@@ -107,6 +108,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
         slidable: true,
         score: score,
         isGameOver: _getGameOverStatus(board)));
+    _save();
   }
 
   void slide({
