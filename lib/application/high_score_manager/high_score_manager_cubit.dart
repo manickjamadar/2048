@@ -21,16 +21,16 @@ class HighScoreManagerCubit extends Cubit<HighScoreManagerState> {
   }
 
   void _init() async {
-    _refreshed(boardOptionCubit.currentOption);
+    _refreshed(boardOptionCubit.state.currentOption);
     _boardOptionStream = boardOptionCubit.listen((state) {
-      final currentOption = state.options[state.currentOptionIndex];
-      _refreshed(currentOption);
+      _refreshed(state.currentOption);
     });
   }
 
   void save(BoardScore newHighScore) {
     emit(HighScoreManagerState(score: newHighScore));
-    highScoreManagerFacade.save(newHighScore, boardOptionCubit.currentOption);
+    highScoreManagerFacade.save(
+        newHighScore, boardOptionCubit.state.currentOption);
   }
 
   void _refreshed(BoardOption option) async {

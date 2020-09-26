@@ -106,14 +106,15 @@ class __$BoardOptionStateCopyWithImpl<$Res>
   }
 }
 
-class _$_BoardOptionState implements _BoardOptionState {
+class _$_BoardOptionState extends _BoardOptionState {
   const _$_BoardOptionState(
       {@required this.currentOptionIndex,
       @required this.isLoading,
       @required this.options})
       : assert(currentOptionIndex != null),
         assert(isLoading != null),
-        assert(options != null);
+        assert(options != null),
+        super._();
 
   @override
   final int currentOptionIndex;
@@ -153,7 +154,8 @@ class _$_BoardOptionState implements _BoardOptionState {
       __$BoardOptionStateCopyWithImpl<_BoardOptionState>(this, _$identity);
 }
 
-abstract class _BoardOptionState implements BoardOptionState {
+abstract class _BoardOptionState extends BoardOptionState {
+  const _BoardOptionState._() : super._();
   const factory _BoardOptionState(
       {@required int currentOptionIndex,
       @required bool isLoading,

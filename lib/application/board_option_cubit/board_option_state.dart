@@ -1,7 +1,8 @@
 part of 'board_option_cubit.dart';
 
 @freezed
-abstract class BoardOptionState with _$BoardOptionState {
+abstract class BoardOptionState implements _$BoardOptionState {
+  const BoardOptionState._();
   const factory BoardOptionState(
       {@required int currentOptionIndex,
       @required bool isLoading,
@@ -16,4 +17,6 @@ abstract class BoardOptionState with _$BoardOptionState {
       BoardOption(title: "Giant", size: BoardSize(8)),
     ]);
   }
+
+  BoardOption get currentOption => options[currentOptionIndex];
 }
