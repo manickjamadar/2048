@@ -40,6 +40,7 @@ dependencies:
   json_annotation: ^3.1.0
   fluttertoast: ^7.1.1
   easy_debounce: ^1.0.1
+  swipe_gesture_recognizer: ^0.0.2
 
 dev_dependencies:
   flutter_test:
