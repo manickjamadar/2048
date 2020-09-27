@@ -11,7 +11,6 @@ import 'package:twozerofoureight/presentation/core/widgets/theme_background_view
 import 'package:twozerofoureight/presentation/screens/home/widgets/board_option_wheel.dart';
 import 'package:twozerofoureight/presentation/screens/home/widgets/theme_color_picker.dart';
 import 'package:twozerofoureight/presentation/screens/saved_board/saved_board_screen.dart';
-import "../../../application/high_score_manager/high_score_manager_cubit.dart";
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/screens/about/about_screen.dart';
 import 'package:twozerofoureight/presentation/screens/play/play_screen.dart';
@@ -26,7 +25,7 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Icon(MyIcons.logo, size: 100),
+            Icon(MyIcons.logo2, size: 80),
             buildBoardOptionWheel(context),
             buildPlayButton(context),
             Row(

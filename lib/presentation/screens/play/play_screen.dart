@@ -35,7 +35,7 @@ class PlayScreen extends StatelessWidget {
               builder: (_, constraints) {
                 final height = constraints.biggest.height * 0.4;
                 return Icon(
-                  MyIcons.logo,
+                  MyIcons.logo2,
                   size: height,
                 );
               },

@@ -8,6 +8,8 @@ class MyIcons {
 
   static const IconData logo =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData logo2 =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData colorPallete = Icons.color_lens;
   static const IconData rating = Icons.star;
   static const IconData about = Icons.info;
