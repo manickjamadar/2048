@@ -127,11 +127,7 @@ class PlayScreen extends StatelessWidget {
           id: UniqueId(),
           option:
               BlocProvider.of<BoardOptionCubit>(context).state.currentOption,
-          puzzle: Puzzle(
-              board: puzzleState.mainBoard,
-              isGameOver: puzzleState.isGameOver,
-              previousBoard: puzzleState.previousBoard,
-              score: puzzleState.score));
+          puzzle: puzzleState.toModel());
       BlocProvider.of<SavedBoardCubit>(context).save(savedBoard);
       Fluttertoast.showToast(
         msg: "Board Saved Successfully",
