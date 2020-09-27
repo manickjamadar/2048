@@ -31,7 +31,15 @@ class PlayScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Icon(MyIcons.logo, size: 50)),
+            Expanded(child: LayoutBuilder(
+              builder: (_, constraints) {
+                final height = constraints.biggest.height * 0.4;
+                return Icon(
+                  MyIcons.logo,
+                  size: height,
+                );
+              },
+            )),
             Padding(
               padding: const EdgeInsets.only(
                   left: 20, right: 20, top: 10, bottom: 30),
