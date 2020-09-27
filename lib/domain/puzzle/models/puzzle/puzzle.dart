@@ -7,9 +7,11 @@ part 'puzzle.freezed.dart';
 
 @freezed
 abstract class Puzzle with _$Puzzle {
-  const factory Puzzle(
-      {@required Board board,
-      @required BoardScore score,
-      @required Option<Board> previousBoard,
-      @required bool isGameOver}) = _Puzzle;
+  const factory Puzzle({
+    @required Board board,
+    @required BoardScore score,
+    @required Option<Board> previousBoard,
+    @required bool isGameOver,
+    @required BoardScore previousScore,
+  }) = _Puzzle;
 }

@@ -17,12 +17,14 @@ class _$PuzzleTearOff {
       {@required Board board,
       @required BoardScore score,
       @required Option<Board> previousBoard,
-      @required bool isGameOver}) {
+      @required bool isGameOver,
+      @required BoardScore previousScore}) {
     return _Puzzle(
       board: board,
       score: score,
       previousBoard: previousBoard,
       isGameOver: isGameOver,
+      previousScore: previousScore,
     );
   }
 }
@@ -35,6 +37,7 @@ mixin _$Puzzle {
   BoardScore get score;
   Option<Board> get previousBoard;
   bool get isGameOver;
+  BoardScore get previousScore;
 
   $PuzzleCopyWith<Puzzle> get copyWith;
 }
@@ -46,7 +49,8 @@ abstract class $PuzzleCopyWith<$Res> {
       {Board board,
       BoardScore score,
       Option<Board> previousBoard,
-      bool isGameOver});
+      bool isGameOver,
+      BoardScore previousScore});
 
   $BoardCopyWith<$Res> get board;
 }
@@ -64,6 +68,7 @@ class _$PuzzleCopyWithImpl<$Res> implements $PuzzleCopyWith<$Res> {
     Object score = freezed,
     Object previousBoard = freezed,
     Object isGameOver = freezed,
+    Object previousScore = freezed,
   }) {
     return _then(_value.copyWith(
       board: board == freezed ? _value.board : board as Board,
@@ -73,6 +78,9 @@ class _$PuzzleCopyWithImpl<$Res> implements $PuzzleCopyWith<$Res> {
           : previousBoard as Option<Board>,
       isGameOver:
           isGameOver == freezed ? _value.isGameOver : isGameOver as bool,
+      previousScore: previousScore == freezed
+          ? _value.previousScore
+          : previousScore as BoardScore,
     ));
   }
 
@@ -95,7 +103,8 @@ abstract class _$PuzzleCopyWith<$Res> implements $PuzzleCopyWith<$Res> {
       {Board board,
       BoardScore score,
       Option<Board> previousBoard,
-      bool isGameOver});
+      bool isGameOver,
+      BoardScore previousScore});
 
   @override
   $BoardCopyWith<$Res> get board;
@@ -115,6 +124,7 @@ class __$PuzzleCopyWithImpl<$Res> extends _$PuzzleCopyWithImpl<$Res>
     Object score = freezed,
     Object previousBoard = freezed,
     Object isGameOver = freezed,
+    Object previousScore = freezed,
   }) {
     return _then(_Puzzle(
       board: board == freezed ? _value.board : board as Board,
@@ -124,6 +134,9 @@ class __$PuzzleCopyWithImpl<$Res> extends _$PuzzleCopyWithImpl<$Res>
           : previousBoard as Option<Board>,
       isGameOver:
           isGameOver == freezed ? _value.isGameOver : isGameOver as bool,
+      previousScore: previousScore == freezed
+          ? _value.previousScore
+          : previousScore as BoardScore,
     ));
   }
 }
@@ -133,11 +146,13 @@ class _$_Puzzle implements _Puzzle {
       {@required this.board,
       @required this.score,
       @required this.previousBoard,
-      @required this.isGameOver})
+      @required this.isGameOver,
+      @required this.previousScore})
       : assert(board != null),
         assert(score != null),
         assert(previousBoard != null),
-        assert(isGameOver != null);
+        assert(isGameOver != null),
+        assert(previousScore != null);
 
   @override
   final Board board;
@@ -147,10 +162,12 @@ class _$_Puzzle implements _Puzzle {
   final Option<Board> previousBoard;
   @override
   final bool isGameOver;
+  @override
+  final BoardScore previousScore;
 
   @override
   String toString() {
-    return 'Puzzle(board: $board, score: $score, previousBoard: $previousBoard, isGameOver: $isGameOver)';
+    return 'Puzzle(board: $board, score: $score, previousBoard: $previousBoard, isGameOver: $isGameOver, previousScore: $previousScore)';
   }
 
   @override
@@ -166,7 +183,10 @@ class _$_Puzzle implements _Puzzle {
                     .equals(other.previousBoard, previousBoard)) &&
             (identical(other.isGameOver, isGameOver) ||
                 const DeepCollectionEquality()
-                    .equals(other.isGameOver, isGameOver)));
+                    .equals(other.isGameOver, isGameOver)) &&
+            (identical(other.previousScore, previousScore) ||
+                const DeepCollectionEquality()
+                    .equals(other.previousScore, previousScore)));
   }
 
   @override
@@ -175,7 +195,8 @@ class _$_Puzzle implements _Puzzle {
       const DeepCollectionEquality().hash(board) ^
       const DeepCollectionEquality().hash(score) ^
       const DeepCollectionEquality().hash(previousBoard) ^
-      const DeepCollectionEquality().hash(isGameOver);
+      const DeepCollectionEquality().hash(isGameOver) ^
+      const DeepCollectionEquality().hash(previousScore);
 
   @override
   _$PuzzleCopyWith<_Puzzle> get copyWith =>
@@ -187,7 +208,8 @@ abstract class _Puzzle implements Puzzle {
       {@required Board board,
       @required BoardScore score,
       @required Option<Board> previousBoard,
-      @required bool isGameOver}) = _$_Puzzle;
+      @required bool isGameOver,
+      @required BoardScore previousScore}) = _$_Puzzle;
 
   @override
   Board get board;
@@ -197,6 +219,8 @@ abstract class _Puzzle implements Puzzle {
   Option<Board> get previousBoard;
   @override
   bool get isGameOver;
+  @override
+  BoardScore get previousScore;
   @override
   _$PuzzleCopyWith<_Puzzle> get copyWith;
 }
