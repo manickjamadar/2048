@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swipe_gesture_recognizer/swipe_gesture_recognizer.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/application/theme_color/theme_color_cubit.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
@@ -12,7 +13,6 @@ import 'package:twozerofoureight/presentation/core/widgets/colored_block_tile.da
 import 'package:twozerofoureight/presentation/core/widgets/custom_button.dart';
 import 'package:twozerofoureight/presentation/core/widgets/merge_only_block_tile.dart';
 import 'package:twozerofoureight/presentation/core/widgets/positioned_tile.dart';
-import 'package:twozerofoureight/presentation/core/widgets/swipe_detector.dart';
 import 'package:twozerofoureight/presentation/core/widgets/tile.dart';
 
 class BoardViewer extends StatefulWidget {
@@ -45,7 +45,7 @@ class _BoardViewerState extends State<BoardViewer>
   Widget build(BuildContext context) {
     return BlocBuilder<PuzzleCubit, PuzzleState>(
       builder: (_, state) {
-        return SwipeDetector(
+        return SwipeGestureRecognizer(
           onSwipeDown: () => _onSwipe(state, BoardDirection.down()),
           onSwipeLeft: () => _onSwipe(state, BoardDirection.left()),
           onSwipeRight: () => _onSwipe(state, BoardDirection.right()),
