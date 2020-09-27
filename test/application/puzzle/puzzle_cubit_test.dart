@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
-import 'package:twozerofoureight/domain/board_option/models/board_option.dart';
 import 'package:twozerofoureight/domain/core/logic/block_related_methods/get_empty_blocks.dart';
 import 'package:twozerofoureight/domain/core/logic/board_direction.dart';
 import 'package:twozerofoureight/domain/puzzle/facade/puzzle_facade.dart';
@@ -39,6 +38,7 @@ void main() {
           Puzzle(
               board: Board.empty(BoardSize(3)),
               isGameOver: false,
+              previousScore: BoardScore(0),
               previousBoard: None(),
               score: BoardScore(0))));
     });
