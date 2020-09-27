@@ -45,31 +45,21 @@ class PuzzleCubit extends Cubit<PuzzleState> {
     puzzleOption.fold((l) {
       init(option.size);
     }, (puzzle) {
-      _initFromModel(puzzle);
+      initFromModel(puzzle);
     });
   }
 
   void _save() async {
-    final puzzle = Puzzle(
-        board: state.mainBoard,
-        isGameOver: state.isGameOver,
-        previousBoard: state.previousBoard,
-        score: state.score);
+    final puzzle = state.toModel();
     await puzzleFacade.save(puzzle, boardOptionCubit.state.currentOption);
   }
 
-  void _initFromModel(Puzzle puzzle) {
-    emit(PuzzleState(
-        boardSize: puzzle.board.size,
-        mainBoard: puzzle.board,
-        mergeOnlyBoard: Board.empty(puzzle.board.size),
-        previousBoard: puzzle.previousBoard,
-        slidable: true,
-        score: puzzle.score,
-        isGameOver: puzzle.isGameOver));
+  //events
+  void initFromModel(Puzzle puzzle) {
+    emit(PuzzleState.fromModel(puzzle));
+    _save();
   }
 
-  //events
   void autoInit() {
     _refreshed(boardOptionCubit.state.currentOption);
     boardOptionSub = boardOptionCubit.listen((optionState) {

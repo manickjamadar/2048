@@ -109,8 +109,6 @@ class SavedBoardScreen extends StatelessWidget {
         FadeRoute(
             page: PlayScreen.generateRoute(
                 puzzleCubit: BlocProvider.of<PuzzleCubit>(context)
-                  ..initWithBoard(
-                      savedBoard.puzzle.board, savedBoard.puzzle.score,
-                      previousBoard: savedBoard.puzzle.previousBoard))));
+                  ..initFromModel(savedBoard.puzzle))));
   }
 }

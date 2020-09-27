@@ -1,7 +1,8 @@
 part of 'puzzle_cubit.dart';
 
 @freezed
-abstract class PuzzleState with _$PuzzleState {
+abstract class PuzzleState implements _$PuzzleState {
+  const PuzzleState._();
   const factory PuzzleState({
     @required BoardSize boardSize,
     @required Board mainBoard,
@@ -21,5 +22,24 @@ abstract class PuzzleState with _$PuzzleState {
         mergeOnlyBoard: Board.empty(boardSize),
         previousBoard: None(),
         score: BoardScore(0));
+  }
+  factory PuzzleState.fromModel(Puzzle puzzle) {
+    return PuzzleState(
+        boardSize: puzzle.board.size,
+        mainBoard: puzzle.board,
+        mergeOnlyBoard: Board.empty(puzzle.board.size),
+        previousBoard: puzzle.previousBoard,
+        score: puzzle.score,
+        isGameOver: puzzle.isGameOver,
+        previousScore: BoardScore(0),
+        slidable: true);
+  }
+
+  Puzzle toModel() {
+    return Puzzle(
+        board: mainBoard,
+        isGameOver: isGameOver,
+        previousBoard: previousBoard,
+        score: score);
   }
 }

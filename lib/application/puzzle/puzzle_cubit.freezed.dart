@@ -189,7 +189,7 @@ class __$PuzzleStateCopyWithImpl<$Res> extends _$PuzzleStateCopyWithImpl<$Res>
   }
 }
 
-class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
+class _$_PuzzleState extends _PuzzleState with DiagnosticableTreeMixin {
   const _$_PuzzleState(
       {@required this.boardSize,
       @required this.mainBoard,
@@ -206,7 +206,8 @@ class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
         assert(previousBoard != null),
         assert(previousScore != null),
         assert(slidable != null),
-        assert(score != null);
+        assert(score != null),
+        super._();
 
   @override
   final BoardSize boardSize;
@@ -294,7 +295,8 @@ class _$_PuzzleState with DiagnosticableTreeMixin implements _PuzzleState {
       __$PuzzleStateCopyWithImpl<_PuzzleState>(this, _$identity);
 }
 
-abstract class _PuzzleState implements PuzzleState {
+abstract class _PuzzleState extends PuzzleState {
+  const _PuzzleState._() : super._();
   const factory _PuzzleState(
       {@required BoardSize boardSize,
       @required Board mainBoard,
