@@ -101,61 +101,71 @@ class _BoardViewerState extends State<BoardViewer>
     );
   }
 
-  Widget buildGameOverPopup(BuildContext context) {
+  Widget buildPopup(List<Widget> widgets) {
     return Positioned.fill(
         child: Container(
-            decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.4),
-                borderRadius: BorderRadius.circular(6)),
-            child: Center(
-              child: Text("Game Over", style: TextStyle(fontSize: 40)),
-            )));
+      decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(6)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: widgets,
+      ),
+    ));
+  }
+
+  Widget buildGameOverPopup(BuildContext context) {
+    return buildPopup([
+      Text("Game Over", style: TextStyle(fontSize: 40)),
+      CustomButton(
+        child: Text(
+          "Try Again",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () => _onResetBoard(context),
+      )
+    ]);
   }
 
   Widget buildWinPopup(BuildContext context) {
     final style = TextStyle(fontSize: 35);
-    return Positioned.fill(
-        child: Container(
-      decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.4),
-          borderRadius: BorderRadius.circular(6)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return buildPopup([
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                MyIcons.rating,
-                color: Colors.amber,
-                size: 40,
-              ),
-              Icon(
-                MyIcons.rating,
-                color: Colors.amber,
-                size: 40,
-              ),
-              Icon(
-                MyIcons.rating,
-                color: Colors.amber,
-                size: 40,
-              ),
-            ],
+          Icon(
+            MyIcons.rating,
+            color: Colors.amber,
+            size: 40,
           ),
-          Text(
-            'You Win',
-            style: style,
+          Icon(
+            MyIcons.rating,
+            color: Colors.amber,
+            size: 40,
           ),
-          CustomButton(
-            child: Text(
-              "Continue Play",
-              style: TextStyle(fontSize: 18),
-            ),
-            onPressed: () => _onWinContinue(),
-          )
+          Icon(
+            MyIcons.rating,
+            color: Colors.amber,
+            size: 40,
+          ),
         ],
       ),
-    ));
+      Text(
+        'You Win',
+        style: style,
+      ),
+      CustomButton(
+        child: Text(
+          "Continue Play",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () => _onWinContinue(),
+      )
+    ]);
+  }
+
+  void _onResetBoard(BuildContext context) {
+    BlocProvider.of<PuzzleCubit>(context).reset();
   }
 
   void _onWinContinue() {
