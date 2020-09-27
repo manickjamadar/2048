@@ -15,6 +15,7 @@ abstract class PuzzleEntity implements _$PuzzleEntity {
     @required bool isGameOver,
     @JsonKey(name: "board_entity") @required BoardEntity boardEntity,
     @JsonKey(name: "previous_board_entity") BoardEntity previousBoardEntity,
+    @Default(0) int previousScore,
   }) = _PuzzleEntity;
 
   factory PuzzleEntity.fromModel(Puzzle puzzle) {
@@ -22,6 +23,7 @@ abstract class PuzzleEntity implements _$PuzzleEntity {
         score: puzzle.score.value,
         isGameOver: puzzle.isGameOver,
         boardEntity: BoardEntity.fromModel(puzzle.board),
+        previousScore: puzzle.previousScore.value,
         previousBoardEntity: puzzle.previousBoard
             .fold(() => null, (board) => BoardEntity.fromModel(board)));
   }
@@ -30,7 +32,8 @@ abstract class PuzzleEntity implements _$PuzzleEntity {
         score: BoardScore(score),
         isGameOver: isGameOver,
         board: boardEntity.toModel(),
-        previousBoard: optionOf(previousBoardEntity?.toModel()));
+        previousBoard: optionOf(previousBoardEntity?.toModel()),
+        previousScore: BoardScore(previousScore));
   }
 
   factory PuzzleEntity.fromJson(Map<String, dynamic> json) =>

@@ -17,20 +17,17 @@ class _$PuzzleEntityTearOff {
 
 // ignore: unused_element
   _PuzzleEntity call(
-      {@required
-          int score,
-      @required
-          bool isGameOver,
-      @required
-      @JsonKey(name: 'board_entity')
-          BoardEntity boardEntity,
-      @JsonKey(name: 'previous_board_entity')
-          BoardEntity previousBoardEntity}) {
+      {@required int score,
+      @required bool isGameOver,
+      @required @JsonKey(name: 'board_entity') BoardEntity boardEntity,
+      @JsonKey(name: 'previous_board_entity') BoardEntity previousBoardEntity,
+      int previousScore = 0}) {
     return _PuzzleEntity(
       score: score,
       isGameOver: isGameOver,
       boardEntity: boardEntity,
       previousBoardEntity: previousBoardEntity,
+      previousScore: previousScore,
     );
   }
 }
@@ -45,6 +42,7 @@ mixin _$PuzzleEntity {
   BoardEntity get boardEntity;
   @JsonKey(name: 'previous_board_entity')
   BoardEntity get previousBoardEntity;
+  int get previousScore;
 
   Map<String, dynamic> toJson();
   $PuzzleEntityCopyWith<PuzzleEntity> get copyWith;
@@ -58,7 +56,8 @@ abstract class $PuzzleEntityCopyWith<$Res> {
       {int score,
       bool isGameOver,
       @JsonKey(name: 'board_entity') BoardEntity boardEntity,
-      @JsonKey(name: 'previous_board_entity') BoardEntity previousBoardEntity});
+      @JsonKey(name: 'previous_board_entity') BoardEntity previousBoardEntity,
+      int previousScore});
 
   $BoardEntityCopyWith<$Res> get boardEntity;
   $BoardEntityCopyWith<$Res> get previousBoardEntity;
@@ -77,6 +76,7 @@ class _$PuzzleEntityCopyWithImpl<$Res> implements $PuzzleEntityCopyWith<$Res> {
     Object isGameOver = freezed,
     Object boardEntity = freezed,
     Object previousBoardEntity = freezed,
+    Object previousScore = freezed,
   }) {
     return _then(_value.copyWith(
       score: score == freezed ? _value.score : score as int,
@@ -88,6 +88,9 @@ class _$PuzzleEntityCopyWithImpl<$Res> implements $PuzzleEntityCopyWith<$Res> {
       previousBoardEntity: previousBoardEntity == freezed
           ? _value.previousBoardEntity
           : previousBoardEntity as BoardEntity,
+      previousScore: previousScore == freezed
+          ? _value.previousScore
+          : previousScore as int,
     ));
   }
 
@@ -122,7 +125,8 @@ abstract class _$PuzzleEntityCopyWith<$Res>
       {int score,
       bool isGameOver,
       @JsonKey(name: 'board_entity') BoardEntity boardEntity,
-      @JsonKey(name: 'previous_board_entity') BoardEntity previousBoardEntity});
+      @JsonKey(name: 'previous_board_entity') BoardEntity previousBoardEntity,
+      int previousScore});
 
   @override
   $BoardEntityCopyWith<$Res> get boardEntity;
@@ -145,6 +149,7 @@ class __$PuzzleEntityCopyWithImpl<$Res> extends _$PuzzleEntityCopyWithImpl<$Res>
     Object isGameOver = freezed,
     Object boardEntity = freezed,
     Object previousBoardEntity = freezed,
+    Object previousScore = freezed,
   }) {
     return _then(_PuzzleEntity(
       score: score == freezed ? _value.score : score as int,
@@ -156,6 +161,9 @@ class __$PuzzleEntityCopyWithImpl<$Res> extends _$PuzzleEntityCopyWithImpl<$Res>
       previousBoardEntity: previousBoardEntity == freezed
           ? _value.previousBoardEntity
           : previousBoardEntity as BoardEntity,
+      previousScore: previousScore == freezed
+          ? _value.previousScore
+          : previousScore as int,
     ));
   }
 }
@@ -166,10 +174,12 @@ class _$_PuzzleEntity extends _PuzzleEntity {
       {@required this.score,
       @required this.isGameOver,
       @required @JsonKey(name: 'board_entity') this.boardEntity,
-      @JsonKey(name: 'previous_board_entity') this.previousBoardEntity})
+      @JsonKey(name: 'previous_board_entity') this.previousBoardEntity,
+      this.previousScore = 0})
       : assert(score != null),
         assert(isGameOver != null),
         assert(boardEntity != null),
+        assert(previousScore != null),
         super._();
 
   factory _$_PuzzleEntity.fromJson(Map<String, dynamic> json) =>
@@ -185,10 +195,13 @@ class _$_PuzzleEntity extends _PuzzleEntity {
   @override
   @JsonKey(name: 'previous_board_entity')
   final BoardEntity previousBoardEntity;
+  @JsonKey(defaultValue: 0)
+  @override
+  final int previousScore;
 
   @override
   String toString() {
-    return 'PuzzleEntity(score: $score, isGameOver: $isGameOver, boardEntity: $boardEntity, previousBoardEntity: $previousBoardEntity)';
+    return 'PuzzleEntity(score: $score, isGameOver: $isGameOver, boardEntity: $boardEntity, previousBoardEntity: $previousBoardEntity, previousScore: $previousScore)';
   }
 
   @override
@@ -205,7 +218,10 @@ class _$_PuzzleEntity extends _PuzzleEntity {
                     .equals(other.boardEntity, boardEntity)) &&
             (identical(other.previousBoardEntity, previousBoardEntity) ||
                 const DeepCollectionEquality()
-                    .equals(other.previousBoardEntity, previousBoardEntity)));
+                    .equals(other.previousBoardEntity, previousBoardEntity)) &&
+            (identical(other.previousScore, previousScore) ||
+                const DeepCollectionEquality()
+                    .equals(other.previousScore, previousScore)));
   }
 
   @override
@@ -214,7 +230,8 @@ class _$_PuzzleEntity extends _PuzzleEntity {
       const DeepCollectionEquality().hash(score) ^
       const DeepCollectionEquality().hash(isGameOver) ^
       const DeepCollectionEquality().hash(boardEntity) ^
-      const DeepCollectionEquality().hash(previousBoardEntity);
+      const DeepCollectionEquality().hash(previousBoardEntity) ^
+      const DeepCollectionEquality().hash(previousScore);
 
   @override
   _$PuzzleEntityCopyWith<_PuzzleEntity> get copyWith =>
@@ -229,15 +246,11 @@ class _$_PuzzleEntity extends _PuzzleEntity {
 abstract class _PuzzleEntity extends PuzzleEntity {
   const _PuzzleEntity._() : super._();
   const factory _PuzzleEntity(
-      {@required
-          int score,
-      @required
-          bool isGameOver,
-      @required
-      @JsonKey(name: 'board_entity')
-          BoardEntity boardEntity,
-      @JsonKey(name: 'previous_board_entity')
-          BoardEntity previousBoardEntity}) = _$_PuzzleEntity;
+      {@required int score,
+      @required bool isGameOver,
+      @required @JsonKey(name: 'board_entity') BoardEntity boardEntity,
+      @JsonKey(name: 'previous_board_entity') BoardEntity previousBoardEntity,
+      int previousScore}) = _$_PuzzleEntity;
 
   factory _PuzzleEntity.fromJson(Map<String, dynamic> json) =
       _$_PuzzleEntity.fromJson;
@@ -252,6 +265,8 @@ abstract class _PuzzleEntity extends PuzzleEntity {
   @override
   @JsonKey(name: 'previous_board_entity')
   BoardEntity get previousBoardEntity;
+  @override
+  int get previousScore;
   @override
   _$PuzzleEntityCopyWith<_PuzzleEntity> get copyWith;
 }

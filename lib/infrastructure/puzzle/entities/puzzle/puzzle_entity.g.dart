@@ -17,6 +17,7 @@ _$_PuzzleEntity _$_$_PuzzleEntityFromJson(Map<String, dynamic> json) {
         ? null
         : BoardEntity.fromJson(
             json['previous_board_entity'] as Map<String, dynamic>),
+    previousScore: json['previousScore'] as int ?? 0,
   );
 }
 
@@ -26,4 +27,5 @@ Map<String, dynamic> _$_$_PuzzleEntityToJson(_$_PuzzleEntity instance) =>
       'isGameOver': instance.isGameOver,
       'board_entity': instance.boardEntity?.toJson(),
       'previous_board_entity': instance.previousBoardEntity?.toJson(),
+      'previousScore': instance.previousScore,
     };
