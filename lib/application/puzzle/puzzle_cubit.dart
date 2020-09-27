@@ -38,8 +38,6 @@ class PuzzleCubit extends Cubit<PuzzleState> {
     return !hasAnyEmptyBlocks(board.blocks) && !board.slidable;
   }
 
-  // BoardScore _previousScore = BoardScore(0);
-
   void _refreshed(BoardOption option) async {
     final puzzleOption = await puzzleFacade.get(option);
     puzzleOption.fold((l) {
@@ -94,7 +92,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
                 GenerateRandomBoardActor(board, count: board.isEmpty ? 2 : 0))
             .run(),
         mergeOnlyBoard: mergeOnlyBoard,
-        previousBoard: previousBoard,
+        previousBoard: previousBoard ?? None(),
         slidable: true,
         score: score,
         isGameOver: _getGameOverStatus(board)));

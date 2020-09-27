@@ -25,14 +25,15 @@ abstract class PuzzleState implements _$PuzzleState {
   }
   factory PuzzleState.fromModel(Puzzle puzzle) {
     return PuzzleState(
-        boardSize: puzzle.board.size,
-        mainBoard: puzzle.board,
-        mergeOnlyBoard: Board.empty(puzzle.board.size),
-        previousBoard: puzzle.previousBoard,
-        score: puzzle.score,
-        isGameOver: puzzle.isGameOver,
-        previousScore: BoardScore(0),
-        slidable: true);
+      boardSize: puzzle.board.size,
+      mainBoard: puzzle.board,
+      mergeOnlyBoard: Board.empty(puzzle.board.size),
+      previousBoard: puzzle.previousBoard,
+      score: puzzle.score,
+      isGameOver: puzzle.isGameOver,
+      slidable: true,
+      previousScore: puzzle.previousScore,
+    );
   }
 
   Puzzle toModel() {
@@ -40,6 +41,7 @@ abstract class PuzzleState implements _$PuzzleState {
         board: mainBoard,
         isGameOver: isGameOver,
         previousBoard: previousBoard,
-        score: score);
+        score: score,
+        previousScore: previousScore);
   }
 }
