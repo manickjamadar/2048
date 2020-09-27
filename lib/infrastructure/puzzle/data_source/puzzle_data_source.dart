@@ -26,6 +26,7 @@ class PuzzleDataSource extends IPuzzleDataSource {
         board: defaultBoard,
         isGameOver: false,
         previousBoard: None(),
+        previousScore: BoardScore(0),
         score: BoardScore(0));
     final defaultPuzzleEntity = PuzzleEntity.fromModel(defaultPuzzle);
     final String defaultRawJson = jsonEncode(defaultPuzzleEntity.toJson());
