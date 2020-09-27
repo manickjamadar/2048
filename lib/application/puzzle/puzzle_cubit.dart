@@ -38,7 +38,7 @@ class PuzzleCubit extends Cubit<PuzzleState> {
     return !hasAnyEmptyBlocks(board.blocks) && !board.slidable;
   }
 
-  BoardScore _previousScore = BoardScore(0);
+  // BoardScore _previousScore = BoardScore(0);
 
   void _refreshed(BoardOption option) async {
     final puzzleOption = await puzzleFacade.get(option);
@@ -154,13 +154,12 @@ class PuzzleCubit extends Cubit<PuzzleState> {
   }
 
   void _mergeCompleted() {
-    _previousScore = state.score;
     final currentScore = state.score.add(state.mergeOnlyBoard);
     emit(state.copyWith(
-      mergeOnlyBoard: Board.empty(state.boardSize),
-      slidable: true,
-      score: currentScore,
-    ));
+        mergeOnlyBoard: Board.empty(state.boardSize),
+        slidable: true,
+        score: currentScore,
+        previousScore: state.score));
     if (currentScore.value > highScoreManagerCubit.state.score.value) {
       highScoreManagerCubit.save(currentScore);
     }
@@ -172,7 +171,8 @@ class PuzzleCubit extends Cubit<PuzzleState> {
       emit(state.copyWith(
         isGameOver: false,
         mainBoard: board,
-        score: _previousScore,
+        score: state.previousScore,
+        previousScore: BoardScore(0),
         previousBoard: None(),
       ));
       _save();

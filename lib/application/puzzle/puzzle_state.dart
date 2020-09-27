@@ -8,6 +8,7 @@ abstract class PuzzleState with _$PuzzleState {
     @required Board mergeOnlyBoard,
     @Default(false) isGameOver,
     @required Option<Board> previousBoard,
+    @Default(BoardScore(0)) previousScore,
     @Default(true) slidable,
     @required BoardScore score,
   }) = _PuzzleState;
