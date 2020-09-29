@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import "package:hive_flutter/hive_flutter.dart";
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
@@ -14,6 +15,8 @@ import 'application/high_score_manager/high_score_manager_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Hive.initFlutter();
   await initServiceLocator();
   runApp(MultiBlocProvider(
