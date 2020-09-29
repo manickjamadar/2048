@@ -122,7 +122,8 @@ class HomeScreen extends StatelessWidget {
         context,
         FadeRoute(
             page: PlayScreen.generateRoute(
-                puzzleCubit: BlocProvider.of<PuzzleCubit>(context))));
+                puzzleCubit: BlocProvider.of<PuzzleCubit>(context)
+                  ..autoInit())));
   }
 
   void _goToSavedBoard(BuildContext context) {

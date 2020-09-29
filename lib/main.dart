@@ -34,8 +34,7 @@ void main() async {
             puzzleFacade: locator<IPuzzleFacade>(),
             boardOptionCubit: BlocProvider.of<BoardOptionCubit>(context),
             highScoreManagerCubit:
-                BlocProvider.of<HighScoreManagerCubit>(context))
-          ..autoInit(),
+                BlocProvider.of<HighScoreManagerCubit>(context)),
       ),
       BlocProvider(
           lazy: false, create: (_) => locator<SavedBoardCubit>()..init()),
