@@ -48,8 +48,14 @@ class PuzzleCubit extends Cubit<PuzzleState> {
   }
 
   void _save() async {
-    final puzzle = state.toModel();
-    await puzzleFacade.save(puzzle, boardOptionCubit.state.currentOption);
+    try {
+      final puzzle = state.toModel();
+      final puzzleOption = boardOptionCubit.state.options
+          .firstWhere((option) => puzzle.board.size == option.size);
+      await puzzleFacade.save(puzzle, puzzleOption);
+    } catch (_) {
+      print("puzzle save error");
+    }
   }
 
   //events
