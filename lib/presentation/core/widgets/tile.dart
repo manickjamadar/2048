@@ -32,13 +32,15 @@ class Tile extends StatelessWidget {
           padding: EdgeInsets.all(8),
           color: color,
           child: FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              value,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: fontSize,
-                  color: isLight ? Colors.black : Colors.white),
+            fit: value.isNotEmpty ? BoxFit.scaleDown : BoxFit.none,
+            child: Center(
+              child: Text(
+                value,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: fontSize,
+                    color: isLight ? Colors.black : Colors.white),
+              ),
             ),
           ),
         ),
