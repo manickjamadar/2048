@@ -28,12 +28,25 @@ class AboutScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
+                SizedBox(height: 30),
                 Expanded(
-                    child: Center(
-                        child: Text(
-                  gameInstruction,
-                  style: TextStyle(fontSize: 22, height: 1.5),
-                ))),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Icon(MyIcons.logo2, size: 80),
+                        SizedBox(height: 20),
+                        Text("How to play",
+                            style: TextStyle(
+                                fontSize: 28, fontWeight: FontWeight.w600)),
+                        SizedBox(height: 20),
+                        Text(
+                          gameInstruction,
+                          style: TextStyle(fontSize: 22, height: 1.5),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
                 FutureBuilder<String>(
                   future: getAppVersion(),
                   builder: (_, snapshot) {
