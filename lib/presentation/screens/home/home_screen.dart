@@ -31,14 +31,14 @@ class HomeScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                GestureDetector(
-                  onLongPress: () => _onPickTheme(context),
-                  child: CustomIconButton(
-                    icon: Icon(MyIcons.colorPallete),
-                    onPressed: () => _goNextTheme(context),
-                    margin: EdgeInsets.all(10),
-                  ),
-                ),
+                // GestureDetector(
+                //   onLongPress: () => _onPickTheme(context),
+                //   child: CustomIconButton(
+                //     icon: Icon(MyIcons.colorPallete),
+                //     onPressed: () => _goNextTheme(context),
+                //     margin: EdgeInsets.all(10),
+                //   ),
+                // ),
                 CustomIconButton(
                   icon: Icon(MyIcons.about),
                   margin: EdgeInsets.all(10),
@@ -47,11 +47,11 @@ class HomeScreen extends StatelessWidget {
                         context, FadeRoute(page: AboutScreen.generateRoute()));
                   },
                 ),
-                CustomIconButton(
-                  icon: Icon(MyIcons.save),
-                  onPressed: () => _goToSavedBoard(context),
-                  margin: EdgeInsets.all(10),
-                )
+                // CustomIconButton(
+                //   icon: Icon(MyIcons.save),
+                //   onPressed: () => _goToSavedBoard(context),
+                //   margin: EdgeInsets.all(10),
+                // )
               ],
             )
           ],

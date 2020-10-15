@@ -5,9 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:twozerofoureight/application/board_option_cubit/board_option_cubit.dart';
 import 'package:twozerofoureight/application/puzzle/puzzle_cubit.dart';
 import 'package:twozerofoureight/application/saved_board/saved_board_cubit.dart';
-import 'package:twozerofoureight/domain/board_option/models/board_option.dart';
 import 'package:twozerofoureight/domain/core/value_objects/unique_id.dart';
-import 'package:twozerofoureight/domain/puzzle/models/puzzle/puzzle.dart';
 import 'package:twozerofoureight/domain/saved_board/models/saved_board.dart';
 import 'package:twozerofoureight/presentation/core/my_icons.dart';
 import 'package:twozerofoureight/presentation/core/widgets/board_viewer.dart';
@@ -68,7 +66,7 @@ class PlayScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 20.0, right: 20),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Row(
                     children: [
@@ -77,24 +75,24 @@ class PlayScreen extends StatelessWidget {
                         onPressed: () => _resetBoard(context),
                         margin: EdgeInsets.only(right: 10),
                       ),
-                      CustomIconButton(
-                        icon: Icon(MyIcons.music),
-                        onPressed: () {},
-                        margin: EdgeInsets.only(right: 10),
-                      ),
-                      CustomIconButton(
-                        icon: Icon(MyIcons.save),
-                        onPressed: () => _onSaveBoard(context),
-                      ),
+                      // CustomIconButton(
+                      //   icon: Icon(MyIcons.music),
+                      //   onPressed: () {},
+                      //   margin: EdgeInsets.only(right: 10),
+                      // ),
+                      // CustomIconButton(
+                      //   icon: Icon(MyIcons.save),
+                      //   onPressed: () => _onSaveBoard(context),
+                      // ),
                     ],
                   ),
-                  BlocBuilder<PuzzleCubit, PuzzleState>(builder: (_, state) {
-                    return CustomIconButton(
-                      icon: Icon(MyIcons.undo),
-                      onPressed: state.previousBoard
-                          .fold(() => null, (a) => () => _undoMove(context)),
-                    );
-                  })
+                  // BlocBuilder<PuzzleCubit, PuzzleState>(builder: (_, state) {
+                  //   return CustomIconButton(
+                  //     icon: Icon(MyIcons.undo),
+                  //     onPressed: state.previousBoard
+                  //         .fold(() => null, (a) => () => _undoMove(context)),
+                  //   );
+                  // })
                 ],
               ),
             ),
